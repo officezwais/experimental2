@@ -108,7 +108,7 @@
 
         /* TYPOGRAPHY SHIFT */
         .p-name {
-            font-family: var(--font-sans); /* START: Clean Sans */
+            font-family: var(--font-sans); 
             font-weight: 500;
             font-size: 4vw;
             letter-spacing: -2px;
@@ -123,28 +123,23 @@
         }
 
         /* HOVER EFFECTS */
-        
-        /* 1. Dim others */
         body.is-hovering .project-item { opacity: 0.2; }
-        
-        /* 2. Highlight Active */
         body.is-hovering .project-item:hover { 
             opacity: 1; border-bottom-color: white; 
         }
 
-        /* 3. THE FONT SWAP */
         .project-item:hover .p-name {
-            font-family: var(--font-serif); /* END: Elegant Serif */
+            font-family: var(--font-serif); 
             font-style: italic;
             font-weight: 400;
             letter-spacing: 0px;
-            transform: translateX(20px); /* Slide right */
+            transform: translateX(20px); 
         }
         
         .project-item:hover .p-tags { color: white; }
 
+        .no-link { cursor: default; }
 
-        /* RESPONSIVE */
         @media (max-width: 900px) {
             .p-name { font-size: 8vw; }
             .p-tags { display: none; }
@@ -159,11 +154,12 @@
     <div class="bg-view">
         <div class="overlay"></div>
         <div class="bg-image" id="bg-1" style="background-image: linear-gradient(135deg, #1e3c72, #2a5298);"></div>
-        <div class="bg-image" id="bg-2" style="background-image: linear-gradient(135deg, #cc2b5e, #753a88);"></div>
-        <div class="bg-image" id="bg-3" style="background-image: linear-gradient(135deg, #42275a, #734b6d);"></div>
-        <div class="bg-image" id="bg-4" style="background-image: linear-gradient(135deg, #bdc3c7, #2c3e50);"></div>
-        <div class="bg-image" id="bg-5" style="background-image: linear-gradient(135deg, #000428, #004e92);"></div>
-        <div class="bg-image" id="bg-6" style="background-image: linear-gradient(135deg, #4568dc, #b06ab3);"></div>
+        <div class="bg-image" id="bg-2" style="background-image: linear-gradient(135deg, #42275a, #734b6d);"></div>
+        <div class="bg-image" id="bg-3" style="background-image: linear-gradient(135deg, #000428, #004e92);"></div>
+        <div class="bg-image" id="bg-4" style="background-image: linear-gradient(135deg, #4568dc, #b06ab3);"></div>
+        <div class="bg-image" id="bg-5" style="background-image: linear-gradient(135deg, #2c3e50, #000000);"></div>
+        <div class="bg-image" id="bg-6" style="background-image: linear-gradient(135deg, #606c88, #3f4c6b);"></div>
+        <div class="bg-image" id="bg-7" style="background-image: linear-gradient(135deg, #161616, #444444);"></div>
     </div>
 
     <a href="index.html" class="close-container">
@@ -176,38 +172,43 @@
     <div class="archive-wrapper">
         <div class="archive-head">
             <span>Selected Works</span>
-            <span>(24)</span>
+            <span>(07)</span>
         </div>
 
-        <a href="#" class="project-item" onmouseenter="setBg('bg-1')" onmouseleave="clearBg()">
-            <span class="p-name">Acne Studios</span>
-            <span class="p-tags">E-Commerce / Strategy</span>
+        <a href="https://experimental-two.vercel.app" target="_blank" class="project-item" onmouseenter="setBg('bg-1')" onmouseleave="clearBg()">
+            <span class="p-name">Knowledge Navigators</span>
+            <span class="p-tags">experimental-two.vercel.app</span>
         </a>
 
-        <a href="#" class="project-item" onmouseenter="setBg('bg-2')" onmouseleave="clearBg()">
-            <span class="p-name">Tesla Motors</span>
-            <span class="p-tags">HMI / Interface</span>
+        <a href="https://www.owego.io" target="_blank" class="project-item" onmouseenter="setBg('bg-2')" onmouseleave="clearBg()">
+            <span class="p-name">Owego</span>
+            <span class="p-tags">owego.io</span>
         </a>
 
-        <a href="#" class="project-item" onmouseenter="setBg('bg-3')" onmouseleave="clearBg()">
-            <span class="p-name">Vogue Italia</span>
-            <span class="p-tags">Digital Editorial</span>
+        <a href="https://www.zwais.com" target="_blank" class="project-item" onmouseenter="setBg('bg-3')" onmouseleave="clearBg()">
+            <span class="p-name">Zwais</span>
+            <span class="p-tags">zwais.com</span>
         </a>
 
-        <a href="#" class="project-item" onmouseenter="setBg('bg-4')" onmouseleave="clearBg()">
-            <span class="p-name">Sony Music</span>
-            <span class="p-tags">Visual Identity</span>
+        <a href="https://www.rebecca-schultze.com" target="_blank" class="project-item" onmouseenter="setBg('bg-4')" onmouseleave="clearBg()">
+            <span class="p-name">Rebecca Schultze</span>
+            <span class="p-tags">rebecca-schultze.com</span>
         </a>
 
-        <a href="#" class="project-item" onmouseenter="setBg('bg-5')" onmouseleave="clearBg()">
-            <span class="p-name">Aesop Skin</span>
-            <span class="p-tags">Global Campaign</span>
+        <a href="https://www.christophmarlon.com" target="_blank" class="project-item" onmouseenter="setBg('bg-5')" onmouseleave="clearBg()">
+            <span class="p-name">Christoph Marlon</span>
+            <span class="p-tags">christophmarlon.com</span>
         </a>
 
-        <a href="#" class="project-item" onmouseenter="setBg('bg-6')" onmouseleave="clearBg()">
-            <span class="p-name">SpaceX</span>
-            <span class="p-tags">WebGL Simulation</span>
+        <a href="https://www.werbemittelimporte.de" target="_blank" class="project-item" onmouseenter="setBg('bg-6')" onmouseleave="clearBg()">
+            <span class="p-name">Werbemittelimporte</span>
+            <span class="p-tags">werbemittelimporte.de</span>
         </a>
+
+        <div class="project-item no-link" onmouseenter="setBg('bg-7')" onmouseleave="clearBg()">
+            <span class="p-name">Krämer Hof</span>
+            <span class="p-tags">Coming soon</span>
+        </div>
 
     </div>
 
@@ -216,10 +217,9 @@
         
         function setBg(id) {
             body.classList.add('is-hovering');
-            // Hide all
             document.querySelectorAll('.bg-image').forEach(el => el.classList.remove('active'));
-            // Show specific
-            document.getElementById(id).classList.add('active');
+            const target = document.getElementById(id);
+            if(target) target.classList.add('active');
         }
 
         function clearBg() {

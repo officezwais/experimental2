@@ -129,24 +129,19 @@
         }
 
 
-        /* --- 6. BOTTOM SECTION (Bigger & Clean) --- */
+        /* --- 6. BOTTOM SECTION (UPDATED LAYOUT) --- */
         .bottom-section {
             position: relative;
             width: 100%;
             z-index: 20;
             display: flex;
-            flex-direction: column;
-            align-items: center; 
-        }
-
-        /* Row 1: Horizontal Links (Now Bigger) */
-        .bottom-links-row {
-            display: flex;
+            /* Changed to row to separate left (contact) and right (links) */
             flex-direction: row; 
-            justify-content: center;
-            gap: 4rem; /* Wider gap for bigger text */
+            justify-content: space-between;
+            align-items: flex-end; /* Align to bottom baseline */
         }
 
+        /* Large Contact Link (Left) */
         .bottom-item-large {
             display: flex;
             align-items: baseline;
@@ -163,17 +158,39 @@
             opacity: 0.6;
         }
 
-        /* Increased Size */
         .b-title-large {
             font-size: 2.5rem; 
             font-weight: 700;
             line-height: 1;
         }
 
+        /* Right side container */
+        .bottom-right-group {
+            display: flex;
+            gap: 2rem; /* Space between Ref and Team */
+            text-align: right;
+        }
+
+        /* Small Links (Right) */
+        .bottom-item-small {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            /* UPDATED: Smaller and Less Transparent */
+            font-size: 0.9rem; 
+            font-weight: 600;
+            opacity: 0.5; /* Makes it "less transparent" / fainter */
+            letter-spacing: 0.5px;
+        }
+        
+        .bottom-item-small:hover { opacity: 1; }
 
         /* Animation */
         .arrow { display: inline-block; transition: transform 0.3s ease; }
-        .service-link:hover .arrow, .bottom-item-large:hover .arrow { transform: translateX(5px); }
+        .service-link:hover .arrow, .bottom-item-large:hover .arrow, .bottom-item-small:hover .arrow { transform: translateX(5px); }
 
         /* Mobile Responsive */
         @media (max-width: 1100px) {
@@ -182,7 +199,9 @@
             .top-services { flex-direction: column; align-items: center; gap: 1.5rem; }
             .service-title { font-size: 2.5rem; }
             
-            .bottom-links-row { flex-direction: column; align-items: center; gap: 2rem; }
+            /* Stack bottom on mobile */
+            .bottom-section { flex-direction: column; align-items: center; gap: 2rem; }
+            .bottom-right-group { justify-content: center; }
             
             .hero-text { width: 90%; font-size: 1rem; top: 30%; }
         }
@@ -218,7 +237,7 @@
 
         <div class="hero-text">
             <span class="hero-statement">
-                We act as cartographers of the digital unknown, mapping the invisible territories between raw code and human culture to build tangible, resilient systems. In an era of ephemeral trends, we anchor brands in substance.
+                We act as cartographers of the digital unknown, mapping the invisible territories between raw code and human culture to build tangible, resilient systems.
             </span>
             
             <p class="multilingual-thanks">
@@ -229,20 +248,18 @@
 
         <div class="bottom-section">
             
-            <div class="bottom-links-row">
-                <a href="contact.html" class="bottom-item-large">
-                    <span class="b-label-large">Hello &rarr;</span>
-                    <span class="b-title-large">Contact</span>
-                </a>
-                
-                <a href="references.html" class="bottom-item-large">
-                    <span class="b-label-large">Work &rarr;</span>
-                    <span class="b-title-large">References</span>
+            <a href="contact.html" class="bottom-item-large">
+                <span class="b-label-large">Hello &rarr;</span>
+                <span class="b-title-large">Contact</span>
+            </a>
+            
+            <div class="bottom-right-group">
+                <a href="references.html" class="bottom-item-small">
+                    References <span class="arrow">&rarr;</span>
                 </a>
 
-                <a href="team.html" class="bottom-item-large">
-                    <span class="b-label-large">Studio &rarr;</span>
-                    <span class="b-title-large">The Team</span>
+                <a href="team.html" class="bottom-item-small">
+                    The Team <span class="arrow">&rarr;</span>
                 </a>
             </div>
 

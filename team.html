@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Team - Knowledge Navigators</title>
+    <title>Personnel - Knowledge Navigators</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,7 @@
             display: flex; justify-content: center; align-items: center;
         }
 
-        /* TEXTURE */
+        /* TEXTURE OVERLAY */
         .noise {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 9000; opacity: 0.04;
@@ -62,7 +62,6 @@
         .close-btn:hover { transform: scale(1.1) rotate(90deg); background: white; }
         .close-btn:hover span { background: black; }
 
-
         /* --- 3. BACKGROUND IMAGES (The Reveal) --- */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -81,30 +80,26 @@
             opacity: 1; transform: scale(1);
         }
 
-
         /* --- 4. THE LIST (The Mask) --- */
         .roster-container {
             position: relative;
             z-index: 10;
             width: 100%;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            mix-blend-mode: normal; /* Reset blend */
         }
 
         .roster-item {
             font-family: var(--font-serif);
-            font-size: 8vw;
-            line-height: 0.9;
+            font-size: 7vw;
+            line-height: 0.95;
             text-transform: uppercase;
-            color: #444; /* Default dim color */
+            color: #444; 
             cursor: pointer;
             transition: all 0.4s var(--ease-luxe);
             position: relative;
-            /* Setup for the stroke effect */
             -webkit-text-stroke: 0px transparent;
         }
 
-        /* Hover Effect: Text turns to Outline to reveal image */
         .roster-item:hover {
             color: transparent;
             -webkit-text-stroke: 1px rgba(255,255,255,0.8);
@@ -112,12 +107,10 @@
             font-style: italic;
         }
 
-        /* Dim others when hovering container */
         .roster-container:hover .roster-item:not(:hover) {
             opacity: 0.1;
             filter: blur(2px);
         }
-
 
         /* --- 5. CORNER DATA (The HUD) --- */
         .corner-data {
@@ -125,26 +118,21 @@
             font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
             color: white; z-index: 20;
             transition: opacity 0.3s;
-            opacity: 0; /* Hidden by default */
+            opacity: 0; 
         }
         
-        /* Show HUD when hovering the list */
         .roster-container:hover ~ .corner-data { opacity: 1; }
 
         .cd-tl { top: 2rem; left: 2rem; }
         .cd-bl { bottom: 2rem; left: 2rem; }
         .cd-br { bottom: 2rem; right: 2rem; text-align: right; }
         
-        /* Labels inside corners */
         .label { color: #666; display: block; margin-bottom: 5px; font-size: 0.6rem; }
 
-
-        /* RESPONSIVE */
         @media (max-width: 900px) {
-            .roster-item { font-size: 15vw; margin: 10px 0; }
-            .cd-br { display: none; } /* Hide complex data on mobile */
+            .roster-item { font-size: 12vw; margin: 10px 0; }
+            .cd-br { display: none; }
         }
-
     </style>
 </head>
 <body>
@@ -152,10 +140,10 @@
     <div class="noise"></div>
 
     <div class="bg-layer">
-        <div class="team-img" id="img-0" style="background: linear-gradient(to bottom, #333, #000);"></div>
-        <div class="team-img" id="img-1" style="background: linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d);"></div>
+        <div class="team-img active" id="img-0" style="background: linear-gradient(to bottom, #333, #000);"></div>
+        <div class="team-img" id="img-1" style="background: linear-gradient(to bottom, #1a2a6c, #b21f1f);"></div>
         <div class="team-img" id="img-2" style="background: linear-gradient(to bottom, #11998e, #38ef7d);"></div>
-        <div class="team-img" id="img-3" style="background: linear-gradient(to bottom, #833ab4, #fd1d1d, #fcb045);"></div>
+        <div class="team-img" id="img-3" style="background: linear-gradient(to bottom, #833ab4, #fd1d1d);"></div>
     </div>
 
     <a href="index.html" class="close-container">
@@ -166,10 +154,10 @@
     </a>
 
     <div class="roster-container">
-        <div class="roster-item" onmouseenter="updateData(0)">Elena Vance</div>
-        <div class="roster-item" onmouseenter="updateData(1)">Marcus T.</div>
-        <div class="roster-item" onmouseenter="updateData(2)">Sarah J.</div>
-        <div class="roster-item" onmouseenter="updateData(3)">David Cho</div>
+        <div class="roster-item" onmouseenter="updateData(0)">Chris Schultz</div>
+        <div class="roster-item" onmouseenter="updateData(1)">Matthias Kubalek</div>
+        <div class="roster-item" onmouseenter="updateData(2)">Meico Rerop</div>
+        <div class="roster-item" onmouseenter="updateData(3)">Benedikt Fehrmling</div>
     </div>
 
     <div class="corner-data cd-tl">
@@ -188,26 +176,25 @@
     </div>
 
     <script>
-        // DATA
+        // UPDATED DATA
         const team = [
-            { role: "Creative Director", id: "OP-001", spec: "Brand Architecture" },
-            { role: "Lead Developer", id: "OP-002", spec: "Full Stack / WebGL" },
-            { role: "Art Director", id: "OP-003", spec: "Visual Synthesis" },
-            { role: "3D Specialist", id: "OP-004", spec: "Physics Simulation" }
+            { role: "Creative Director", id: "OP-001", spec: "Strategy & Identity" },
+            { role: "Lead Developer", id: "OP-002", spec: "Full Stack / Next.js" },
+            { role: "Brand Strategist", id: "OP-003", spec: "Narrative Design" },
+            { role: "3D Specialist", id: "OP-004", spec: "Visual Synthesis" }
         ];
 
-        // ELEMENTS
         const images = document.querySelectorAll('.team-img');
         const dRole = document.getElementById('d-role');
         const dId = document.getElementById('d-id');
         const dSpec = document.getElementById('d-spec');
 
         function updateData(index) {
-            // 1. Swap Image
+            // Swap Images
             images.forEach(img => img.classList.remove('active'));
             document.getElementById(`img-${index}`).classList.add('active');
 
-            // 2. Update Text
+            // Update Corner Stats
             dRole.innerText = team[index].role;
             dId.innerText = team[index].id;
             dSpec.innerText = team[index].spec;
