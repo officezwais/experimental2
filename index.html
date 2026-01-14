@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Navigators</title>
+    <style>
+        /* --- 1. CORE RESET --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: white;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #1a1a1a;
+        }
+
+        /* --- 2. BACKGROUND LAYERS --- */
+        .bg-image {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('images/bg-image.png'); 
+            background-size: cover;
+            background-position: center;
+            z-index: -3;
+        }
+
+        .bg-video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; 
+            z-index: -2;
+            opacity: 0; 
+            transition: opacity 1s ease;
+        }
+        
+        .bg-video.loaded { opacity: 1; }
+
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.15); z-index: -1; pointer-events: none;
+        }
+
+        /* --- 3. CONTAINER --- */
+        .container {
+            position: relative; z-index: 10; height: 100%; width: 100%; 
+            padding: 2.5rem;
+            /* Bottom padding ensures the footer sits nicely off the edge */
+            padding-bottom: 3rem; 
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+
+        a { text-decoration: none; color: white; cursor: pointer; }
+
+        /* --- 4. TOP AREA --- */
+        .top-area {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ROW 1: The Services */
+        .top-services {
+            display: flex;
+            justify-content: space-between; 
+            align-items: flex-start;
+            width: 100%;
+            max-width: 100%;
+            z-index: 20;
+            padding-top: 5px;
+            gap: 1vw; 
+        }
+
+        .service-link {
+            display: flex; align-items: baseline; 
+            gap: 8px; 
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        .service-link:hover { opacity: 0.6; }
+
+        .service-label { 
+            font-size: 0.75rem; font-weight: 300; opacity: 0.6; 
+            transform: translateY(-5px);
+        }
+        
+        .service-title { 
+            font-size: clamp(1.5rem, 3.2vw, 5.5rem); 
+            font-weight: 700; 
+            letter-spacing: -1px;
+            line-height: 0.9;
+        }
+
+        .link-left { justify-content: flex-start; }
+        .link-center { justify-content: center; }
+        .link-right { justify-content: flex-end; }
+
+
+        /* --- 5. CENTER TEXT --- */
+        .hero-text {
+            position: absolute;
+            top: 20%; 
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 100%;
+            max-width: 800px; 
+            font-size: 1.15rem; 
+            line-height: 1.6; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            pointer-events: none; 
+            font-weight: 400;
+        }
+        
+        .hero-statement {
+            margin-bottom: 2rem;
+            display: block;
+            opacity: 0.9;
+        }
+
+        .multilingual-thanks {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            margin-top: 2rem;
+        }
+
+
+        /* --- 6. BOTTOM SECTION (Bigger & Clean) --- */
+        .bottom-section {
+            position: relative;
+            width: 100%;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        /* Row 1: Horizontal Links (Now Bigger) */
+        .bottom-links-row {
+            display: flex;
+            flex-direction: row; 
+            justify-content: center;
+            gap: 4rem; /* Wider gap for bigger text */
+        }
+
+        .bottom-item-large {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .bottom-item-large:hover { opacity: 0.7; }
+
+        .b-label-large {
+            font-size: 0.85rem;
+            font-weight: 300;
+            opacity: 0.6;
+        }
+
+        /* Increased Size */
+        .b-title-large {
+            font-size: 2.5rem; 
+            font-weight: 700;
+            line-height: 1;
+        }
+
+
+        /* Animation */
+        .arrow { display: inline-block; transition: transform 0.3s ease; }
+        .service-link:hover .arrow, .bottom-item-large:hover .arrow { transform: translateX(5px); }
+
+        /* Mobile Responsive */
+        @media (max-width: 1100px) {
+            .container { padding: 1.5rem; padding-bottom: 3rem; }
+            .top-area { flex-direction: column-reverse; gap: 1rem; }
+            .top-services { flex-direction: column; align-items: center; gap: 1.5rem; }
+            .service-title { font-size: 2.5rem; }
+            
+            .bottom-links-row { flex-direction: column; align-items: center; gap: 2rem; }
+            
+            .hero-text { width: 90%; font-size: 1rem; top: 30%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-image"></div>
+    <video class="bg-video" muted playsinline>
+        <source src="images/video.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    
+    <div class="container">
+        
+        <div class="top-area">
+            <div class="top-services">
+                <a href="web-building.html" class="service-link link-left">
+                    <span class="service-label">Service &rarr;</span>
+                    <span class="service-title">Web Building</span>
+                </a>
+                <a href="branding.html" class="service-link link-center">
+                    <span class="service-label">Focus &rarr;</span>
+                    <span class="service-title">Branding</span>
+                </a>
+                <a href="content-creation.html" class="service-link link-right">
+                    <span class="service-label">Creative &rarr;</span>
+                    <span class="service-title">Content Creation</span>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="hero-text">
+            <span class="hero-statement">
+                We act as cartographers of the digital unknown, mapping the invisible territories between raw code and human culture to build tangible, resilient systems. In an era of ephemeral trends, we anchor brands in substance.
+            </span>
+            
+            <p class="multilingual-thanks">
+                Thank you, Danke, Gracias, Merci, Obrigado, ありがとうございました, 감사합니다
+            </p>
+        </div>
+
+
+        <div class="bottom-section">
+            
+            <div class="bottom-links-row">
+                <a href="contact.html" class="bottom-item-large">
+                    <span class="b-label-large">Hello &rarr;</span>
+                    <span class="b-title-large">Contact</span>
+                </a>
+                
+                <a href="references.html" class="bottom-item-large">
+                    <span class="b-label-large">Work &rarr;</span>
+                    <span class="b-title-large">References</span>
+                </a>
+
+                <a href="team.html" class="bottom-item-large">
+                    <span class="b-label-large">Studio &rarr;</span>
+                    <span class="b-title-large">The Team</span>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const video = document.querySelector('.bg-video');
+        video.addEventListener('canplaythrough', () => {
+            video.classList.add('loaded');
+            playVideoCycle();
+        }, { once: true });
+
+        function playVideoCycle() {
+            video.play().catch(e => console.log("User interaction needed"));
+        }
+
+        video.addEventListener('ended', () => {
+            setTimeout(() => {
+                video.currentTime = 0;
+                video.play();
+            }, 8000); 
+        });
+    </script>
+
+</body>
+</html>

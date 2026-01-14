@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branding - Knowledge Navigators</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. SETUP --- */
+        :root {
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --ease-luxe: cubic-bezier(0.2, 0.0, 0.2, 1); /* Sharp, expensive easing */
+            --color-cream: #f2f0e9;
+            --color-dark: #0a0a0a;
+            --color-red: #c92a2a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--color-dark);
+            width: 100vw; height: 100vh;
+            overflow: hidden;
+            font-family: var(--font-sans);
+        }
+
+        /* FILM GRAIN TEXTURE */
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9000; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- 2. CLOSE BUTTON --- */
+        .close-container {
+            position: fixed; top: 2rem; right: 2rem; z-index: 1000;
+        }
+        .close-btn {
+            display: flex; justify-content: center; align-items: center;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.4s var(--ease-luxe);
+            mix-blend-mode: difference;
+            text-decoration: none;
+        }
+        .close-btn span {
+            display: block; width: 14px; height: 1px; background: white;
+            position: absolute; transition: transform 0.4s var(--ease-luxe);
+        }
+        .close-btn span:first-child { transform: rotate(45deg); }
+        .close-btn span:last-child { transform: rotate(-45deg); }
+        .close-btn:hover { transform: scale(1.1) rotate(90deg); background: white; }
+        .close-btn:hover span { background: black; }
+
+
+        /* --- 3. THE ACCORDION --- */
+        .gallery {
+            display: flex;
+            width: 100vw; height: 100vh;
+        }
+
+        .panel {
+            flex: 1; /* Default state: all equal */
+            position: relative;
+            height: 100%;
+            transition: flex 0.8s var(--ease-luxe);
+            overflow: hidden;
+            border-right: 1px solid rgba(0,0,0,0.1);
+            cursor: crosshair;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* HOVER STATES */
+        .panel:hover {
+            flex: 5; /* Expands to take up space */
+        }
+        /* When one is hovered, dim the others slightly */
+        .gallery:hover .panel:not(:hover) {
+            filter: grayscale(100%) brightness(0.7);
+        }
+
+
+        /* --- 4. PANEL CONTENT STYLING --- */
+        
+        /* The "Spine" Text (Visible when collapsed) */
+        .spine-title {
+            position: absolute;
+            bottom: 4rem; left: 50%;
+            transform: translateX(-50%) rotate(-90deg);
+            white-space: nowrap;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transform-origin: center;
+            opacity: 1;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+        .panel:hover .spine-title { opacity: 0; }
+
+        /* The Main Content (Revealed on expand) */
+        .content-wrap {
+            padding: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s 0.2s, transform 0.6s 0.2s; /* Delay so it only shows when open */
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        .panel:hover .content-wrap { opacity: 1; transform: translateY(0); }
+
+        .big-number {
+            font-family: var(--font-serif);
+            font-size: 12rem;
+            line-height: 0.8;
+            opacity: 0.1;
+            position: absolute; top: -2rem; left: 2rem;
+            font-style: italic;
+        }
+
+        h2 {
+            font-family: var(--font-serif);
+            font-size: 6vw;
+            line-height: 0.9;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        p {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 400px;
+            margin-bottom: 3rem;
+        }
+
+        .price-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            border: 1px solid currentColor;
+            padding: 10px 30px;
+            border-radius: 50px;
+        }
+
+
+        /* --- 5. INDIVIDUAL PANEL AESTHETICS --- */
+
+        /* PANEL 1: IDENTITY (White Paper Style) */
+        #p1 {
+            background-color: var(--color-cream);
+            color: var(--color-dark);
+        }
+        #p1 .spine-title { color: var(--color-dark); }
+        /* Abstract Shape */
+        #p1 .shape {
+            position: absolute; right: -10%; bottom: -10%;
+            font-size: 30rem; font-family: var(--font-serif); font-style: italic;
+            opacity: 0.05; pointer-events: none;
+        }
+
+        /* PANEL 2: STRATEGY (Editorial Red) */
+        #p2 {
+            background-color: var(--color-red);
+            color: var(--color-cream);
+        }
+        #p2 .spine-title { color: var(--color-cream); }
+        /* Scrolling Marquee Background */
+        .marquee-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; pointer-events: none; opacity: 0.1;
+        }
+        .marquee-text {
+            font-family: var(--font-mono); font-size: 10rem;
+            white-space: nowrap; position: absolute;
+            transform: rotate(-45deg); top: 20%; left: -20%;
+        }
+
+        /* PANEL 3: EXPERIENCE (Void Style) */
+        #p3 {
+            background-color: var(--color-dark);
+            color: var(--color-cream);
+            border-right: none;
+        }
+        #p3 .spine-title { color: white; }
+        .video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.4; mix-blend-mode: screen;
+            filter: grayscale(100%);
+            transition: 0.8s;
+        }
+        #p3:hover .video-bg { opacity: 0.8; filter: grayscale(0%); }
+
+
+        /* RESPONSIVE: Stack vertically on mobile */
+        @media (max-width: 900px) {
+            .gallery { flex-direction: column; }
+            .panel { width: 100%; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.1); }
+            .spine-title { transform: none; bottom: 2rem; left: 2rem; }
+            h2 { font-size: 3rem; }
+            .content-wrap { padding: 2rem; }
+            .big-number { font-size: 6rem; }
+            .panel:hover { flex: 4; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+
+    <a href="index.html" class="close-container">
+        <div class="close-btn" title="Back">
+            <span></span>
+            <span></span>
+        </div>
+    </a>
+
+    <div class="gallery">
+
+        <div class="panel" id="p1">
+            <span class="spine-title">01 — Identity</span>
+            <div class="shape">Aa</div>
+            
+            <div class="content-wrap">
+                <span class="big-number">01</span>
+                <h2>Visual<br>Identity.</h2>
+                <p>The face of your business. We craft timeless logos, typography systems, and color palettes that cut through the noise.</p>
+                <div>
+                    <span class="price-tag">€ 2.500</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" id="p2">
+            <span class="spine-title">02 — Strategy</span>
+            <div class="marquee-container">
+                <div class="marquee-text">RULES RULES RULES RULES</div>
+            </div>
+
+            <div class="content-wrap">
+                <span class="big-number">02</span>
+                <h2>Brand<br>Guidelines.</h2>
+                <p>A comprehensive strategic manual. We define your voice, photography direction, and usage rules to ensure total consistency.</p>
+                <div>
+                    <span class="price-tag">€ 6.000</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" id="p3">
+            <span class="spine-title">03 — Experience</span>
+            <video class="video-bg" autoplay muted loop playsinline>
+                <source src="images/video.mp4" type="video/mp4">
+            </video>
+
+            <div class="content-wrap">
+                <span class="big-number">03</span>
+                <h2>Total<br>Immerison.</h2>
+                <p>From motion language to physical merchandise. We design the entire world your brand lives in.</p>
+                <div>
+                    <span class="price-tag">€ 12.000+</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

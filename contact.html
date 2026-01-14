@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initiate Protocol - Knowledge Navigators</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. SETUP --- */
+        :root {
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --color-bg: #0a0a0a;
+            --color-text: #ffffff;
+            --input-color: #888;
+            --ease-luxe: cubic-bezier(0.2, 0.0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            width: 100vw; height: 100vh;
+            overflow: hidden;
+            font-family: var(--font-sans);
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* TEXTURE */
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9000; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+
+        /* --- 2. BACKGROUND CLOCK (The "Urgency") --- */
+        .bg-clock {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-mono);
+            font-size: 25vw;
+            color: rgba(255,255,255,0.03);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            line-height: 1;
+        }
+
+
+        /* --- 3. CLOSE BUTTON --- */
+        .close-container {
+            position: fixed; top: 2rem; right: 2rem; z-index: 1000;
+        }
+        .close-btn {
+            display: flex; justify-content: center; align-items: center;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            transition: all 0.4s var(--ease-luxe);
+            text-decoration: none;
+            mix-blend-mode: difference;
+        }
+        .close-btn span {
+            display: block; width: 14px; height: 1px; background: white;
+            position: absolute; transition: transform 0.4s var(--ease-luxe);
+        }
+        .close-btn span:first-child { transform: rotate(45deg); }
+        .close-btn span:last-child { transform: rotate(-45deg); }
+        .close-btn:hover { transform: scale(1.1) rotate(90deg); background: white; }
+        .close-btn:hover span { background: black; }
+
+
+        /* --- 4. THE FORM CONTAINER --- */
+        .contract-container {
+            position: relative;
+            z-index: 10;
+            width: 70vw;
+            max-width: 1000px;
+        }
+
+        .header-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem; color: #555; text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 3rem; display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 1rem;
+        }
+
+        /* --- 5. THE NATURAL LANGUAGE FORM --- */
+        .contract-text {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            line-height: 1.6;
+            color: #fff;
+        }
+
+        /* The Inputs disguised as text */
+        .input-line {
+            display: inline-block;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #333;
+            color: var(--input-color);
+            font-family: var(--font-sans); /* Contrast font for input */
+            font-size: 2.5rem;
+            font-weight: 300;
+            padding: 0 10px;
+            width: auto;
+            min-width: 100px;
+            max-width: 400px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-line:focus {
+            border-bottom-color: #fff;
+            color: #fff;
+        }
+
+        .input-line::placeholder {
+            color: #333;
+            font-style: italic;
+        }
+
+        /* Hover effect on inputs */
+        .input-line:hover {
+            border-bottom-color: #666;
+        }
+
+
+        /* --- 6. THE HOLD BUTTON --- */
+        .submit-area {
+            margin-top: 5rem;
+            display: flex; align-items: center; justify-content: flex-end; gap: 2rem;
+        }
+
+        .hold-btn {
+            position: relative;
+            width: 200px; height: 60px;
+            border: 1px solid rgba(255,255,255,0.3);
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            overflow: hidden;
+            user-select: none;
+            transition: 0.3s;
+        }
+
+        .hold-text {
+            font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            z-index: 2; color: #fff; pointer-events: none; transition: 0.3s;
+        }
+
+        /* The Progress Fill */
+        .hold-fill {
+            position: absolute; top: 0; left: 0; height: 100%; width: 0%;
+            background: #fff;
+            transition: width 0.1s linear; /* Smooth fill */
+            z-index: 1;
+        }
+
+        /* Success State */
+        .hold-btn.success { border-color: #fff; }
+        .hold-btn.success .hold-text { color: #000; content: "SENT"; }
+        .hold-btn.success .hold-fill { width: 100% !important; }
+
+        /* Direct Links */
+        .direct-links {
+            position: absolute; bottom: 2rem; left: 2rem;
+            display: flex; gap: 2rem;
+        }
+        .d-link {
+            font-family: var(--font-mono); font-size: 0.8rem; color: #555; text-transform: uppercase;
+            transition: 0.3s; border-bottom: 1px solid transparent;
+        }
+        .d-link:hover { color: #fff; border-bottom-color: #fff; }
+
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .contract-text { font-size: 1.5rem; line-height: 1.8; }
+            .input-line { font-size: 1.4rem; border-bottom-width: 1px; width: 100%; display: block; margin-bottom: 1rem;}
+            .bg-clock { font-size: 40vw; transform: translate(-50%, -50%) rotate(90deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+
+    <div class="bg-clock" id="timer">00:00:00</div>
+
+    <a href="index.html" class="close-container">
+        <div class="close-btn" title="Cancel">
+            <span></span>
+            <span></span>
+        </div>
+    </a>
+
+    <div class="contract-container">
+        <div class="header-meta">
+            <span>Transmission Protocol</span>
+            <span>Secure // Encrypted</span>
+        </div>
+
+        <div class="contract-text">
+            Hello. My name is
+            <input type="text" class="input-line" placeholder="[Your Name]" required>
+            and I represent
+            <input type="text" class="input-line" placeholder="[Company/Brand]">.
+            We are looking to initialize a
+            <input type="text" class="input-line" placeholder="[Project Type]">
+            project with a budget of roughly
+            <input type="text" class="input-line" placeholder="[Amount]">.
+            You can reach me at
+            <input type="email" class="input-line" placeholder="[Email Address]">
+            to discuss the details.
+        </div>
+
+        <div class="submit-area">
+            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #555; text-transform: uppercase;">
+                Interaction Required
+            </div>
+            
+            <div class="hold-btn" id="holdBtn">
+                <div class="hold-fill" id="holdFill"></div>
+                <span class="hold-text" id="btnText">Hold to Transmit</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="direct-links">
+        <a href="mailto:hello@knowledgenavigators.com" class="d-link">hello@k-n.com</a>
+        <a href="#" class="d-link">+49 123 456 78</a>
+        <a href="#" class="d-link">Instagram</a>
+    </div>
+
+    <script>
+        // --- 1. CLOCK LOGIC (Running Milliseconds) ---
+        const timer = document.getElementById('timer');
+        
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const ms = String(now.getMilliseconds()).padStart(3, '0').slice(0,2); // Just 2 digits for aesthetic
+            timer.innerText = `${h}:${m}:${s}:${ms}`;
+            requestAnimationFrame(updateClock);
+        }
+        updateClock();
+
+
+        // --- 2. HOLD BUTTON LOGIC ---
+        const btn = document.getElementById('holdBtn');
+        const fill = document.getElementById('holdFill');
+        const text = document.getElementById('btnText');
+        
+        let isHolding = false;
+        let progress = 0;
+        let holdInterval;
+
+        // Mouse Down / Touch Start
+        const startHold = () => {
+            if(btn.classList.contains('success')) return;
+            isHolding = true;
+            holdInterval = setInterval(() => {
+                progress += 2; // Speed of fill
+                fill.style.width = `${progress}%`;
+
+                // Success Threshold
+                if (progress >= 100) {
+                    completeHold();
+                }
+            }, 10);
+        };
+
+        // Mouse Up / Leave
+        const stopHold = () => {
+            if(btn.classList.contains('success')) return;
+            isHolding = false;
+            clearInterval(holdInterval);
+            progress = 0;
+            fill.style.width = '0%';
+        };
+
+        const completeHold = () => {
+            clearInterval(holdInterval);
+            btn.classList.add('success');
+            text.innerText = "TRANSMISSION SENT";
+            
+            // Optional: Redirect or Reset after delay
+            setTimeout(() => {
+                // Here you would actually submit the form data
+                console.log("Form Submitted");
+            }, 500);
+        };
+
+        btn.addEventListener('mousedown', startHold);
+        btn.addEventListener('mouseup', stopHold);
+        btn.addEventListener('mouseleave', stopHold);
+        
+        // Touch support for mobile
+        btn.addEventListener('touchstart', (e) => { e.preventDefault(); startHold(); });
+        btn.addEventListener('touchend', stopHold);
+
+    </script>
+
+</body>
+</html>
