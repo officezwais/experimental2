@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Navigators</title>
+    <title>Knowledge Navigators | Digital Cartography</title>
+    <meta name="description" content="Mapping the territories between raw code and human culture.">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+
     <style>
         /* --- 1. CORE RESET --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -13,11 +21,11 @@
             color: white;
             height: 100vh;
             width: 100vw;
-            overflow: hidden;
+            overflow: hidden; /* Restored to original behavior */
             background-color: #1a1a1a;
         }
 
-        /* --- 2. BACKGROUND LAYERS --- */
+        /* --- 2. BACKGROUND --- */
         .bg-image {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('images/bg-image.png'); 
@@ -33,7 +41,6 @@
             opacity: 0; 
             transition: opacity 1s ease;
         }
-        
         .bg-video.loaded { opacity: 1; }
 
         .overlay {
@@ -45,28 +52,18 @@
         .container {
             position: relative; z-index: 10; height: 100%; width: 100%; 
             padding: 2.5rem;
-            /* Bottom padding ensures the footer sits nicely off the edge */
             padding-bottom: 3rem; 
             display: flex; flex-direction: column; justify-content: space-between;
         }
 
         a { text-decoration: none; color: white; cursor: pointer; }
 
-        /* --- 4. TOP AREA --- */
-        .top-area {
-            position: relative;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ROW 1: The Services */
+        /* --- 4. TOP SERVICES --- */
         .top-services {
             display: flex;
             justify-content: space-between; 
             align-items: flex-start;
             width: 100%;
-            max-width: 100%;
             z-index: 20;
             padding-top: 5px;
             gap: 1vw; 
@@ -93,197 +90,168 @@
             line-height: 0.9;
         }
 
-        .link-left { justify-content: flex-start; }
-        .link-center { justify-content: center; }
-        .link-right { justify-content: flex-end; }
-
-
-        /* --- 5. CENTER TEXT --- */
+        /* --- 5. CENTER TEXT (Position Restored) --- */
         .hero-text {
             position: absolute;
-            top: 20%; 
+            top: 20%; /* Restored to your original position */
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
             width: 100%;
             max-width: 800px; 
-            font-size: 1.15rem; 
-            line-height: 1.6; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
             pointer-events: none; 
-            font-weight: 400;
+            /* Font Update */
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
         }
         
         .hero-statement {
+            font-size: 1.25rem;
+            line-height: 1.6; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
             margin-bottom: 2rem;
             display: block;
             opacity: 0.9;
         }
 
         .multilingual-thanks {
-            font-size: 0.9rem;
-            opacity: 0.6;
-            font-style: italic;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-style: normal;
+            font-size: 0.8rem;
+            opacity: 0.5;
             letter-spacing: 0.5px;
             margin-top: 2rem;
         }
 
-
-        /* --- 6. BOTTOM SECTION (UPDATED LAYOUT) --- */
+        /* --- 6. BOTTOM SECTION --- */
         .bottom-section {
             position: relative;
             width: 100%;
             z-index: 20;
             display: flex;
-            /* Changed to row to separate left (contact) and right (links) */
             flex-direction: row; 
             justify-content: space-between;
-            align-items: flex-end; /* Align to bottom baseline */
+            align-items: flex-end;
         }
 
-        /* Large Contact Link (Left) */
         .bottom-item-large {
             display: flex;
             align-items: baseline;
             gap: 10px;
             text-transform: uppercase;
-            cursor: pointer;
             transition: opacity 0.3s;
         }
-        .bottom-item-large:hover { opacity: 0.7; }
 
-        .b-label-large {
-            font-size: 0.85rem;
-            font-weight: 300;
-            opacity: 0.6;
-        }
+        .b-label-large { font-size: 0.85rem; font-weight: 300; opacity: 0.6; }
+        .b-title-large { font-size: 2.5rem; font-weight: 700; line-height: 1; }
 
-        .b-title-large {
-            font-size: 2.5rem; 
-            font-weight: 700;
-            line-height: 1;
-        }
+        .bottom-right-group { display: flex; gap: 2rem; text-align: right; }
 
-        /* Right side container */
-        .bottom-right-group {
-            display: flex;
-            gap: 2rem; /* Space between Ref and Team */
-            text-align: right;
-        }
-
-        /* Small Links (Right) */
         .bottom-item-small {
             display: flex;
             align-items: center;
             gap: 5px;
             text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            /* UPDATED: Smaller and Less Transparent */
             font-size: 0.9rem; 
             font-weight: 600;
-            opacity: 0.5; /* Makes it "less transparent" / fainter */
-            letter-spacing: 0.5px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
         }
-        
-        .bottom-item-small:hover { opacity: 1; }
 
-        /* Animation */
+        /* --- ARROW ANIMATION --- */
         .arrow { display: inline-block; transition: transform 0.3s ease; }
-        .service-link:hover .arrow, .bottom-item-large:hover .arrow, .bottom-item-small:hover .arrow { transform: translateX(5px); }
+        
+        .service-link:hover .arrow, 
+        .bottom-item-large:hover .arrow, 
+        .bottom-item-small:hover .arrow { 
+            transform: translateX(6px); 
+        }
 
-        /* Mobile Responsive */
+        /* --- MOBILE OPTIMIZATION CHECK --- */
         @media (max-width: 1100px) {
-            .container { padding: 1.5rem; padding-bottom: 3rem; }
-            .top-area { flex-direction: column-reverse; gap: 1rem; }
-            .top-services { flex-direction: column; align-items: center; gap: 1.5rem; }
-            .service-title { font-size: 2.5rem; }
+            .container { padding: 1.5rem; }
             
-            /* Stack bottom on mobile */
-            .bottom-section { flex-direction: column; align-items: center; gap: 2rem; }
-            .bottom-right-group { justify-content: center; }
+            /* Services: Stacked but clean */
+            .top-services { flex-direction: column; align-items: center; gap: 1rem; }
+            .service-title { font-size: 2.2rem; }
             
-            .hero-text { width: 90%; font-size: 1rem; top: 30%; }
+            /* Hero: Position adjusted for mobile so it doesn't overlap header */
+            .hero-text { 
+                top: 45%; 
+                width: 85%; 
+                font-size: 1rem; 
+            }
+            .hero-statement { font-size: 1.1rem; line-height: 1.4; }
+
+            .bottom-section { flex-direction: column; align-items: center; gap: 1.5rem; }
+            .bottom-right-group { justify-content: center; width: 100%; }
+        }
+
+        /* Extra small mobile fix (iPhone SE / small screens) */
+        @media (max-width: 400px) {
+            .service-title { font-size: 1.8rem; }
+            .b-title-large { font-size: 2rem; }
+            .hero-text { top: 40%; }
         }
     </style>
 </head>
 <body>
 
     <div class="bg-image"></div>
-    <video class="bg-video" muted playsinline>
+    <video class="bg-video" muted playsinline loop>
         <source src="images/video.mp4" type="video/mp4">
     </video>
     <div class="overlay"></div>
     
     <div class="container">
-        
         <div class="top-area">
             <div class="top-services">
-                <a href="web-building.html" class="service-link link-left">
-                    <span class="service-label">Service &rarr;</span>
+                <a href="web-building.html" class="service-link">
+                    <span class="service-label">Service <span class="arrow">&rarr;</span></span>
                     <span class="service-title">Web Building</span>
                 </a>
-                <a href="branding.html" class="service-link link-center">
-                    <span class="service-label">Focus &rarr;</span>
+                <a href="branding.html" class="service-link">
+                    <span class="service-label">Focus <span class="arrow">&rarr;</span></span>
                     <span class="service-title">Branding</span>
                 </a>
-                <a href="content-creation.html" class="service-link link-right">
-                    <span class="service-label">Creative &rarr;</span>
+                <a href="content-creation.html" class="service-link">
+                    <span class="service-label">Creative <span class="arrow">&rarr;</span></span>
                     <span class="service-title">Content Creation</span>
                 </a>
             </div>
         </div>
 
-
         <div class="hero-text">
             <span class="hero-statement">
                 We act as cartographers of the digital unknown, mapping the invisible territories between raw code and human culture to build tangible, resilient systems.
             </span>
-            
             <p class="multilingual-thanks">
                 Thank you, Danke, Gracias, Merci, Obrigado, ありがとうございました, 감사합니다
             </p>
         </div>
 
-
         <div class="bottom-section">
-            
             <a href="contact.html" class="bottom-item-large">
-                <span class="b-label-large">Hello &rarr;</span>
+                <span class="b-label-large">Hello <span class="arrow">&rarr;</span></span>
                 <span class="b-title-large">Contact</span>
             </a>
-            
             <div class="bottom-right-group">
                 <a href="references.html" class="bottom-item-small">
                     References <span class="arrow">&rarr;</span>
                 </a>
-
                 <a href="team.html" class="bottom-item-small">
                     The Team <span class="arrow">&rarr;</span>
                 </a>
             </div>
-
         </div>
-
     </div>
 
     <script>
         const video = document.querySelector('.bg-video');
         video.addEventListener('canplaythrough', () => {
             video.classList.add('loaded');
-            playVideoCycle();
+            video.play().catch(() => {});
         }, { once: true });
-
-        function playVideoCycle() {
-            video.play().catch(e => console.log("User interaction needed"));
-        }
-
-        video.addEventListener('ended', () => {
-            setTimeout(() => {
-                video.currentTime = 0;
-                video.play();
-            }, 8000); 
-        });
     </script>
 
 </body>
