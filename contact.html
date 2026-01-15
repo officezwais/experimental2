@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Initiate Protocol - Knowledge Navigators</title>
+    
+    <title>Initiate Protocol | Knowledge Navigators</title>
+    <meta name="description" content="Secure transmission protocol to initialize branding, web, and creative projects with Knowledge Navigators.">
+    <meta name="keywords" content="Contact Knowledge Navigators, Project Inquiry, Digital Cartography">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
 
     <style>
         /* --- 1. SETUP --- */
@@ -17,7 +22,7 @@
             --font-mono: 'JetBrains Mono', monospace;
             --color-bg: #0a0a0a;
             --color-text: #ffffff;
-            --input-color: #888;
+            --input-color: #ffffff;
             --ease-luxe: cubic-bezier(0.2, 0.0, 0.2, 1);
         }
 
@@ -26,8 +31,10 @@
         body {
             background-color: var(--color-bg);
             color: var(--color-text);
-            width: 100vw; height: 100vh;
-            overflow: hidden;
+            width: 100vw; 
+            min-height: 100dvh;
+            /* Allow vertical scroll on mobile to reach the bottom links */
+            overflow-x: hidden;
             font-family: var(--font-sans);
             display: flex; justify-content: center; align-items: center;
         }
@@ -39,21 +46,19 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-
-        /* --- 2. BACKGROUND CLOCK (The "Urgency") --- */
+        /* --- 2. BACKGROUND CLOCK --- */
         .bg-clock {
-            position: absolute;
+            position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             font-family: var(--font-mono);
-            font-size: 25vw;
+            font-size: 20vw;
             color: rgba(255,255,255,0.03);
             white-space: nowrap;
             pointer-events: none;
             z-index: 0;
             line-height: 1;
         }
-
 
         /* --- 3. CLOSE BUTTON --- */
         .close-container {
@@ -67,7 +72,6 @@
             backdrop-filter: blur(5px);
             cursor: pointer;
             transition: all 0.4s var(--ease-luxe);
-            text-decoration: none;
             mix-blend-mode: difference;
         }
         .close-btn span {
@@ -79,64 +83,51 @@
         .close-btn:hover { transform: scale(1.1) rotate(90deg); background: white; }
         .close-btn:hover span { background: black; }
 
-
         /* --- 4. THE FORM CONTAINER --- */
         .contract-container {
             position: relative;
             z-index: 10;
-            width: 70vw;
-            max-width: 1000px;
+            width: 90vw;
+            max-width: 1100px;
+            padding: 4rem 0;
         }
 
         .header-meta {
             font-family: var(--font-mono);
-            font-size: 0.75rem; color: #555; text-transform: uppercase; letter-spacing: 1px;
-            margin-bottom: 3rem; display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 1rem;
+            font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 3rem; display: flex; justify-content: space-between; border-bottom: 1px solid #222; padding-bottom: 1rem;
         }
 
         /* --- 5. THE NATURAL LANGUAGE FORM --- */
         .contract-text {
             font-family: var(--font-serif);
-            font-size: 3rem;
-            line-height: 1.6;
+            font-style: italic; /* Consistency with previous page */
+            font-size: clamp(1.8rem, 4vw, 3.2rem);
+            line-height: 1.5;
             color: #fff;
         }
 
-        /* The Inputs disguised as text */
         .input-line {
             display: inline-block;
             background: transparent;
             border: none;
             border-bottom: 2px solid #333;
             color: var(--input-color);
-            font-family: var(--font-sans); /* Contrast font for input */
-            font-size: 2.5rem;
+            font-family: var(--font-sans);
+            font-style: normal;
+            font-size: 0.8em; /* Relative to the serif text */
             font-weight: 300;
             padding: 0 10px;
-            width: auto;
-            min-width: 100px;
-            max-width: 400px;
             outline: none;
-            transition: 0.3s;
+            transition: all 0.3s;
+            /* Prevents iOS zoom on focus */
+            font-size: clamp(1rem, 2.5vw, 2.5rem); 
         }
 
-        .input-line:focus {
-            border-bottom-color: #fff;
-            color: #fff;
-        }
+        .input-line:focus { border-bottom-color: #fff; }
+        .input-line::placeholder { color: #333; font-style: italic; opacity: 0.5; }
 
-        .input-line::placeholder {
-            color: #333;
-            font-style: italic;
-        }
-
-        /* Hover effect on inputs */
-        .input-line:hover {
-            border-bottom-color: #666;
-        }
-
-
-        /* --- 6. THE HOLD BUTTON --- */
+        /* --- 6. THE SUBMIT AREA --- */
         .submit-area {
             margin-top: 5rem;
             display: flex; align-items: center; justify-content: flex-end; gap: 2rem;
@@ -144,58 +135,68 @@
 
         .hold-btn {
             position: relative;
-            width: 200px; height: 60px;
-            border: 1px solid rgba(255,255,255,0.3);
+            width: 240px; height: 64px;
+            border: 1px solid rgba(255,255,255,0.2);
             display: flex; justify-content: center; align-items: center;
             cursor: pointer;
             overflow: hidden;
             user-select: none;
-            transition: 0.3s;
+            transition: 0.4s var(--ease-luxe);
         }
 
         .hold-text {
-            font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
-            z-index: 2; color: #fff; pointer-events: none; transition: 0.3s;
+            font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+            z-index: 2; color: #fff; pointer-events: none;
         }
 
-        /* The Progress Fill */
         .hold-fill {
             position: absolute; top: 0; left: 0; height: 100%; width: 0%;
             background: #fff;
-            transition: width 0.1s linear; /* Smooth fill */
+            transition: width 0.1s linear;
             z-index: 1;
         }
 
-        /* Success State */
         .hold-btn.success { border-color: #fff; }
-        .hold-btn.success .hold-text { color: #000; content: "SENT"; }
-        .hold-btn.success .hold-fill { width: 100% !important; }
+        .hold-btn.success .hold-text { color: #000; font-weight: bold; }
 
-        /* Direct Links */
+        /* --- 7. FOOTER LINKS --- */
         .direct-links {
             position: absolute; bottom: 2rem; left: 2rem;
-            display: flex; gap: 2rem;
+            display: flex; gap: 2rem; z-index: 100;
         }
         .d-link {
-            font-family: var(--font-mono); font-size: 0.8rem; color: #555; text-transform: uppercase;
-            transition: 0.3s; border-bottom: 1px solid transparent;
+            font-family: var(--font-mono); font-size: 0.7rem; color: #444; text-transform: uppercase;
+            text-decoration: none; transition: 0.3s; border-bottom: 1px solid transparent;
         }
         .d-link:hover { color: #fff; border-bottom-color: #fff; }
 
-
-        /* RESPONSIVE */
+        /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 900px) {
-            .contract-text { font-size: 1.5rem; line-height: 1.8; }
-            .input-line { font-size: 1.4rem; border-bottom-width: 1px; width: 100%; display: block; margin-bottom: 1rem;}
-            .bg-clock { font-size: 40vw; transform: translate(-50%, -50%) rotate(90deg); }
-        }
+            body { overflow-y: auto; align-items: flex-start; }
+            .contract-container { padding-top: 6rem; width: 85vw; }
+            
+            .contract-text { font-size: 1.6rem; line-height: 1.8; }
+            
+            .input-line { 
+                display: block; /* Stack inputs on mobile for better typing */
+                width: 100%; 
+                margin: 0.5rem 0 1.5rem 0;
+                padding: 10px 0;
+                font-size: 1.2rem;
+            }
 
+            .submit-area { flex-direction: column-reverse; align-items: flex-start; gap: 1rem; margin-top: 3rem; }
+            .hold-btn { width: 100%; }
+
+            .bg-clock { font-size: 40vw; opacity: 0.02; transform: translate(-50%, -50%) rotate(90deg); }
+
+            .direct-links { position: relative; bottom: 0; left: 0; flex-direction: column; gap: 1rem; padding: 4rem 0 2rem 0; }
+        }
     </style>
 </head>
 <body>
 
     <div class="noise"></div>
-
     <div class="bg-clock" id="timer">00:00:00</div>
 
     <a href="index.html" class="close-container">
@@ -206,58 +207,58 @@
     </a>
 
     <div class="contract-container">
-        <div class="header-meta">
+        <header class="header-meta">
             <span>Transmission Protocol</span>
             <span>Secure // Encrypted</span>
-        </div>
+        </header>
 
-        <div class="contract-text">
-            Hello. My name is
-            <input type="text" class="input-line" placeholder="[Your Name]" required>
-            and I represent
-            <input type="text" class="input-line" placeholder="[Company/Brand]">.
-            We are looking to initialize a
-            <input type="text" class="input-line" placeholder="[Project Type]">
-            project with a budget of roughly
-            <input type="text" class="input-line" placeholder="[Amount]">.
-            You can reach me at
-            <input type="email" class="input-line" placeholder="[Email Address]">
-            to discuss the details.
-        </div>
-
-        <div class="submit-area">
-            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #555; text-transform: uppercase;">
-                Interaction Required
+        <form id="protocolForm">
+            <div class="contract-text">
+                Hello. My name is
+                <input type="text" class="input-line" placeholder="[Your Name]" required>
+                and I represent
+                <input type="text" class="input-line" placeholder="[Company/Brand]">.
+                We are looking to initialize a
+                <input type="text" class="input-line" placeholder="[Project Type]">
+                project with a budget of roughly
+                <input type="text" class="input-line" placeholder="[Amount]">.
+                You can reach me at
+                <input type="email" class="input-line" placeholder="[Email Address]" required>
+                to discuss the details.
             </div>
-            
-            <div class="hold-btn" id="holdBtn">
-                <div class="hold-fill" id="holdFill"></div>
-                <span class="hold-text" id="btnText">Hold to Transmit</span>
-            </div>
-        </div>
-    </div>
 
-    <div class="direct-links">
-        <a href="mailto:hello@knowledge-navigators.com" class="d-link">hello@knowledge-navigators.com</a>
-        <a href="#" class="d-link">+49 162 92 373 84</a>
-        <a href="#" class="d-link">Instagram</a>
+            <div class="submit-area">
+                <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #444; text-transform: uppercase; letter-spacing: 1px;">
+                    Authentication Required
+                </div>
+                
+                <div class="hold-btn" id="holdBtn">
+                    <div class="hold-fill" id="holdFill"></div>
+                    <span class="hold-text" id="btnText">Hold to Transmit</span>
+                </div>
+            </div>
+        </form>
+
+        <footer class="direct-links">
+            <a href="mailto:hello@knowledge-navigators.com" class="d-link">hello@knowledge-navigators.com</a>
+            <a href="tel:+491629237384" class="d-link">+49 162 92 373 84</a>
+            <a href="#" class="d-link">Instagram</a>
+        </footer>
     </div>
 
     <script>
-        // --- 1. CLOCK LOGIC (Running Milliseconds) ---
+        // --- 1. CLOCK LOGIC ---
         const timer = document.getElementById('timer');
-        
         function updateClock() {
             const now = new Date();
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             const s = String(now.getSeconds()).padStart(2, '0');
-            const ms = String(now.getMilliseconds()).padStart(3, '0').slice(0,2); // Just 2 digits for aesthetic
+            const ms = String(now.getMilliseconds()).padStart(3, '0').slice(0,2);
             timer.innerText = `${h}:${m}:${s}:${ms}`;
             requestAnimationFrame(updateClock);
         }
         updateClock();
-
 
         // --- 2. HOLD BUTTON LOGIC ---
         const btn = document.getElementById('holdBtn');
@@ -268,22 +269,16 @@
         let progress = 0;
         let holdInterval;
 
-        // Mouse Down / Touch Start
-        const startHold = () => {
+        const startHold = (e) => {
             if(btn.classList.contains('success')) return;
             isHolding = true;
             holdInterval = setInterval(() => {
-                progress += 2; // Speed of fill
+                progress += 1.5; 
                 fill.style.width = `${progress}%`;
-
-                // Success Threshold
-                if (progress >= 100) {
-                    completeHold();
-                }
+                if (progress >= 100) completeHold();
             }, 10);
         };
 
-        // Mouse Up / Leave
         const stopHold = () => {
             if(btn.classList.contains('success')) return;
             isHolding = false;
@@ -296,22 +291,21 @@
             clearInterval(holdInterval);
             btn.classList.add('success');
             text.innerText = "TRANSMISSION SENT";
-            
-            // Optional: Redirect or Reset after delay
-            setTimeout(() => {
-                // Here you would actually submit the form data
-                console.log("Form Submitted");
-            }, 500);
+            // Logic for form submission would go here
+            console.log("Transmission Successful");
         };
 
+        // Desktop Events
         btn.addEventListener('mousedown', startHold);
         btn.addEventListener('mouseup', stopHold);
         btn.addEventListener('mouseleave', stopHold);
         
-        // Touch support for mobile
-        btn.addEventListener('touchstart', (e) => { e.preventDefault(); startHold(); });
+        // Mobile Events
+        btn.addEventListener('touchstart', (e) => { 
+            if(e.cancelable) e.preventDefault(); 
+            startHold(); 
+        }, {passive: false});
         btn.addEventListener('touchend', stopHold);
-
     </script>
 
 </body>

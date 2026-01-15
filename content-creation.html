@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Output Stream - Knowledge Navigators</title>
+    
+    <title>Output Stream | Knowledge Navigators</title>
+    <meta name="description" content="A curated visual feed of people, products, and digital textures. Mapping the creative output of Knowledge Navigators.">
+    <meta name="keywords" content="Creative Portfolio, Digital Textures, Product Photography, Knowledge Navigators Feed">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
 
     <style>
         /* --- 1. SETUP --- */
         :root {
             --font-sans: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
+            --font-serif: 'Playfair Display', serif;
             --color-bg: #050505;
             --color-text: #ffffff;
             --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -29,14 +35,13 @@
             font-family: var(--font-sans);
         }
 
-        /* FILM GRAIN TEXTURE */
         .noise {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 9000; opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* --- 2. CLOSE BUTTON (Magnetic) --- */
+        /* --- 2. CLOSE BUTTON --- */
         .close-container {
             position: fixed; top: 2rem; right: 2rem; z-index: 1000;
         }
@@ -48,7 +53,6 @@
             backdrop-filter: blur(5px);
             cursor: pointer;
             transition: all 0.4s var(--ease-out);
-            text-decoration: none;
             mix-blend-mode: exclusion;
         }
         .close-btn span {
@@ -67,7 +71,7 @@
             grid-template-columns: 1fr 1fr 1fr;
             width: 100vw; height: 100vh;
             gap: 1px;
-            background: #222; /* Gap color */
+            background: #111;
         }
 
         .column {
@@ -75,47 +79,36 @@
             height: 100vh;
             overflow: hidden;
             background: #000;
-            cursor: pointer;
-            transition: 0.3s;
+            cursor: crosshair;
         }
 
         /* --- 4. SCROLLING TRACKS --- */
         .track {
             display: flex; flex-direction: column;
             width: 100%;
-            /* Animation applied inline via CSS Vars for varying speeds */
             animation: scrollUp var(--duration) linear infinite;
         }
 
         /* The Content Blocks */
         .feed-item {
             width: 100%;
-            height: 50vh; /* 2 items visible per column */
+            height: 50vh; 
             position: relative;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .feed-media {
             width: 100%; height: 100%;
             object-fit: cover;
             filter: grayscale(100%);
-            transition: 0.5s;
-            opacity: 0.5;
+            transition: 0.8s var(--ease-out);
+            opacity: 0.4;
         }
         
-        /* HOVER INTERACTION */
-        /* Pause the column when hovered */
-        .column:hover .track {
-            animation-play-state: paused;
-        }
-        /* Colorize the items */
-        .column:hover .feed-media {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
+        .column:hover .track { animation-play-state: paused; }
+        .column:hover .feed-media { filter: grayscale(0%); opacity: 1; }
 
-
-        /* --- 5. OVERLAYS (Raw Technical Labels) --- */
+        /* --- 5. OVERLAYS (Aesthetic Style) --- */
         .col-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 10;
@@ -124,41 +117,30 @@
         }
 
         .col-title {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.2rem;
+            text-transform: capitalize;
+            letter-spacing: 1px;
             border: 1px solid white;
-            padding: 10px 20px;
+            padding: 15px 30px;
             background: black;
             color: white;
             transform: rotate(-90deg);
-            transition: 0.4s var(--ease-out);
-        }
-
-        .col-price {
-            position: absolute; bottom: 2rem;
-            font-family: var(--font-mono);
-            font-size: 1.5rem;
-            opacity: 0; transform: translateY(20px);
-            transition: 0.4s var(--ease-out);
+            transition: 0.5s var(--ease-out);
         }
 
         /* Reveal on Hover */
         .column:hover .col-title {
-            transform: rotate(0deg) scale(1.5);
+            transform: rotate(0deg) scale(1.2);
             background: white; color: black;
             border-color: transparent;
         }
-        .column:hover .col-price {
-            opacity: 1; transform: translateY(0);
-        }
-
 
         /* --- 6. ANIMATIONS --- */
         @keyframes scrollUp {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); } /* Moves halfway up (assuming duplicated content) */
+            100% { transform: translateY(-50%); } 
         }
         
         @keyframes scrollDown {
@@ -166,16 +148,38 @@
             100% { transform: translateY(0); }
         }
 
-
-        /* --- 7. MOBILE --- */
-        @media (max-width: 900px) {
+        /* --- 7. OPTIMAL MOBILE --- */
+        @media (max-width: 1024px) {
             .feed-container { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr; }
-            .track { flex-direction: row; animation: scrollLeft 10s linear infinite; height: 100%; width: 200vw; }
-            .feed-item { width: 50vw; height: 100%; border-right: 1px solid #333; border-bottom: none; }
-            .col-title { transform: rotate(0deg); }
-            @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        }
+            
+            .column { height: 33.33vh; border-bottom: 1px solid #111; }
+            
+            /* Change to horizontal flow on mobile */
+            .track { 
+                flex-direction: row; 
+                height: 100%; 
+                width: fit-content; /* Dynamic width for horizontal scroll */
+                animation: scrollLeft var(--duration) linear infinite !important; 
+            }
+            
+            .feed-item { 
+                width: 60vw; /* Shows 1.5 items at a time */
+                height: 100%; 
+                border-bottom: none; 
+                border-right: 1px solid rgba(255,255,255,0.1); 
+            }
+            
+            .col-title { 
+                transform: rotate(0deg); 
+                font-size: 1rem; 
+                padding: 8px 16px; 
+            }
 
+            @keyframes scrollLeft { 
+                0% { transform: translateX(0); } 
+                100% { transform: translateX(-50%); } 
+            }
+        }
     </style>
 </head>
 <body>
@@ -194,43 +198,45 @@
         <div class="column">
             <div class="col-overlay">
                 <h2 class="col-title">People</h2>
-                <span class="col-price"></span>
             </div>
             
-            <div class="track" style="--duration: 25s; animation-name: scrollUp;">
+            <div class="track" style="--duration: 20s; animation-name: scrollUp;">
                 <div class="feed-item"><video class="feed-media" autoplay muted loop playsinline><source src="images/video.mp4" type="video/mp4"></video></div>
-                <div class="feed-item"><video class="feed-media" autoplay muted loop playsinline><source src="images/video2.mp4" type="video/mp4"></video></div>             
-                <div class="feed-item"><img src="images/person.png" class="feed-media" alt="Person"></div>             
-                <div class="feed-item"><img src="images/person2.png" class="feed-media" alt="Person"></div>
-                <div class="feed-item"><img src="images/person3.png" class="feed-media" alt="Person"></div>
-
-        </div>
+                <div class="feed-item"><img src="images/person.png" class="feed-media" alt="Subject"></div>             
+                <div class="feed-item"><img src="images/person2.png" class="feed-media" alt="Subject"></div>
+                <div class="feed-item"><video class="feed-media" autoplay muted loop playsinline><source src="images/video.mp4" type="video/mp4"></video></div>
+                <div class="feed-item"><img src="images/person.png" class="feed-media" alt="Subject"></div>             
+                <div class="feed-item"><img src="images/person2.png" class="feed-media" alt="Subject"></div>
             </div>
+        </div>
 
         <div class="column">
             <div class="col-overlay">
                 <h2 class="col-title">Products</h2>
-                <span class="col-price"></span>
             </div>
             
-            <div class="track" style="--duration: 30s; animation-name: scrollDown;">
+            <div class="track" style="--duration: 25s; animation-name: scrollDown;">
                 <div class="feed-item"><img src="images/product.png" class="feed-media" alt="Product"></div>                
                 <div class="feed-item"><img src="images/product2.png" class="feed-media" alt="Product"></div>                
                 <div class="feed-item"><img src="images/product3.png" class="feed-media" alt="Product"></div>
-                <div class="feed-item"><img src="images/product4.png" class="feed-media" alt="Product"></div>                
+                <div class="feed-item"><img src="images/product.png" class="feed-media" alt="Product"></div>                
+                <div class="feed-item"><img src="images/product2.png" class="feed-media" alt="Product"></div>                
+                <div class="feed-item"><img src="images/product3.png" class="feed-media" alt="Product"></div>
             </div>
         </div>
 
         <div class="column">
             <div class="col-overlay">
                 <h2 class="col-title">Textures</h2>
-                <span class="col-price"></span>
             </div>
             
-            <div class="track" style="--duration: 18s; animation-name: scrollUp;">
-                <div class="feed-item"><img src="images/material.png" class="feed-media" alt="Product"></div>                
-                <div class="feed-item"><img src="images/material2.png" class="feed-media" alt="Product"></div>                
-                <div class="feed-item"><img src="images/material3.png" class="feed-media" alt="Product"></div> 
+            <div class="track" style="--duration: 15s; animation-name: scrollUp;">
+                <div class="feed-item"><img src="images/material.png" class="feed-media" alt="Texture"></div>                
+                <div class="feed-item"><img src="images/material2.png" class="feed-media" alt="Texture"></div>                
+                <div class="feed-item"><img src="images/material3.png" class="feed-media" alt="Texture"></div> 
+                <div class="feed-item"><img src="images/material.png" class="feed-media" alt="Texture"></div>                
+                <div class="feed-item"><img src="images/material2.png" class="feed-media" alt="Texture"></div>                
+                <div class="feed-item"><img src="images/material3.png" class="feed-media" alt="Texture"></div> 
             </div>
         </div>
 

@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personnel - Knowledge Navigators</title>
+    
+    <title>Personnel | Knowledge Navigators</title>
+    <meta name="description" content="Meet the team of cartographers mapping the digital unknown. Specialized in Creative Direction, Brand Strategy, and Visual Synthesis.">
+    <meta name="keywords" content="Knowledge Navigators Team, Chris Schultze, Matthias Kubalek, Digital Strategy Experts">
+    <meta name="author" content="Knowledge Navigators">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
 
     <style>
         /* --- 1. SETUP & VARS --- */
@@ -25,7 +31,7 @@
         body {
             background-color: var(--color-bg);
             color: var(--color-text);
-            width: 100vw; height: 100vh;
+            width: 100vw; height: 100dvh;
             overflow: hidden;
             font-family: var(--font-sans);
             display: flex; justify-content: center; align-items: center;
@@ -62,25 +68,22 @@
         .close-btn:hover { transform: scale(1.1) rotate(90deg); background: white; }
         .close-btn:hover span { background: black; }
 
-        /* --- 3. BACKGROUND IMAGES (The Reveal) --- */
+        /* --- 3. BACKGROUND IMAGES --- */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1;
-            pointer-events: none;
+            z-index: 1; pointer-events: none;
         }
         
         .team-img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover;
-            opacity: 0; transform: scale(1.1);
-            transition: opacity 0.5s, transform 8s ease-out;
-            filter: grayscale(100%) brightness(0.7);
+            opacity: 0; transform: scale(1.05);
+            transition: opacity 0.8s ease, transform 6s var(--ease-luxe);
+            filter: grayscale(100%) brightness(0.5);
         }
-        .team-img.active {
-            opacity: 1; transform: scale(1);
-        }
+        .team-img.active { opacity: 1; transform: scale(1); }
 
-        /* --- 4. THE LIST (The Mask) --- */
+        /* --- 4. THE ROSTER (The Mask) --- */
         .roster-container {
             position: relative;
             z-index: 10;
@@ -90,48 +93,78 @@
 
         .roster-item {
             font-family: var(--font-serif);
-            font-size: 7vw;
-            line-height: 0.95;
+            font-size: clamp(2rem, 6.5vw, 8rem);
+            line-height: 1;
             text-transform: uppercase;
-            color: #444; 
+            color: rgba(255,255,255,0.25); 
             cursor: pointer;
-            transition: all 0.4s var(--ease-luxe);
+            transition: all 0.5s var(--ease-luxe);
             position: relative;
-            -webkit-text-stroke: 0px transparent;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .arrow {
+            font-size: 0.4em;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s var(--ease-luxe);
+            font-style: normal;
         }
 
         .roster-item:hover {
             color: transparent;
-            -webkit-text-stroke: 1px rgba(255,255,255,0.8);
-            letter-spacing: 5px;
+            -webkit-text-stroke: 1px rgba(255,255,255,1);
+            letter-spacing: 2px;
             font-style: italic;
         }
 
-        .roster-container:hover .roster-item:not(:hover) {
-            opacity: 0.1;
-            filter: blur(2px);
+        .roster-item:hover .arrow {
+            opacity: 1;
+            transform: translateX(0);
         }
 
-        /* --- 5. CORNER DATA (The HUD) --- */
+        .roster-container:hover .roster-item:not(:hover) {
+            opacity: 0.05;
+            filter: blur(4px);
+        }
+
+        /* --- 5. CORNER DATA (HUD) --- */
         .corner-data {
             position: fixed;
-            font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
+            font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
             color: white; z-index: 20;
-            transition: opacity 0.3s;
+            transition: all 0.4s var(--ease-luxe);
             opacity: 0; 
+            pointer-events: none;
         }
         
+        /* Show HUD when hovering the container */
         .roster-container:hover ~ .corner-data { opacity: 1; }
 
-        .cd-tl { top: 2rem; left: 2rem; }
-        .cd-bl { bottom: 2rem; left: 2rem; }
-        .cd-br { bottom: 2rem; right: 2rem; text-align: right; }
+        .cd-tl { top: 2.5rem; left: 2.5rem; }
+        .cd-bl { bottom: 2.5rem; left: 2.5rem; }
+        .cd-br { bottom: 2.5rem; right: 2.5rem; text-align: right; }
         
-        .label { color: #666; display: block; margin-bottom: 5px; font-size: 0.6rem; }
+        .label { color: #555; display: block; margin-bottom: 8px; font-size: 0.65rem; }
 
-        @media (max-width: 900px) {
-            .roster-item { font-size: 12vw; margin: 10px 0; }
-            .cd-br { display: none; }
+        /* --- 6. OPTIMAL MOBILE --- */
+        @media (max-width: 1024px) {
+            body { align-items: center; overflow-y: auto; }
+            .roster-container { padding: 2rem 0; gap: 1.5rem; }
+            .roster-item { font-size: 2.2rem; color: rgba(255,255,255,0.6); }
+            
+            /* On mobile, HUD remains visible to guide the user */
+            .corner-data { opacity: 0.8; font-size: 0.65rem; position: relative; top: auto; left: auto; right: auto; bottom: auto; }
+            
+            .cd-tl { position: fixed; top: 2rem; left: 1.5rem; }
+            .cd-bl { position: fixed; bottom: 2rem; left: 1.5rem; }
+            .cd-br { display: none; } /* Hide right corner to prevent overlap on narrow screens */
+            
+            .arrow { opacity: 0.3; transform: none; font-size: 1.2rem; }
+            .roster-item:hover { letter-spacing: 1px; }
         }
     </style>
 </head>
@@ -140,10 +173,11 @@
     <div class="noise"></div>
 
     <div class="bg-layer">
-        <div class="team-img active" id="img-0" style="background: linear-gradient(to bottom, #333, #000);"></div>
-        <div class="team-img" id="img-1" style="background: linear-gradient(to bottom, #1a2a6c, #b21f1f);"></div>
-        <div class="team-img" id="img-2" style="background: linear-gradient(to bottom, #11998e, #38ef7d);"></div>
-        <div class="team-img" id="img-3" style="background: linear-gradient(to bottom, #833ab4, #fd1d1d);"></div>
+        <div class="team-img active" id="img-0" style="background: linear-gradient(to bottom, #111, #000);"></div>
+        <div class="team-img" id="img-1" style="background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);"></div>
+        <div class="team-img" id="img-2" style="background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);"></div>
+        <div class="team-img" id="img-3" style="background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);"></div>
+        <div class="team-img" id="img-4" style="background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);"></div>
     </div>
 
     <a href="index.html" class="close-container">
@@ -153,33 +187,40 @@
         </div>
     </a>
 
-    <div class="roster-container">
-        <div class="roster-item" onmouseenter="updateData(0)">Chris Schultze</div>
-        <div class="roster-item" onmouseenter="updateData(1)">Matthias Kubalek</div>
-        <div class="roster-item" onmouseenter="updateData(2)">Meico Rerop</div>
-        <div class="roster-item" onmouseenter="updateData(3)">Benedikt Fehrmling</div>
-    </div>
+    <main class="roster-container">
+        <div class="roster-item" onmouseenter="updateData(0)" onmouseleave="resetData()">
+            Chris Schultze <span class="arrow">&rarr;</span>
+        </div>
+        <div class="roster-item" onmouseenter="updateData(1)" onmouseleave="resetData()">
+            Matthias Kubalek <span class="arrow">&rarr;</span>
+        </div>
+        <div class="roster-item" onmouseenter="updateData(2)" onmouseleave="resetData()">
+            Meico Rerop <span class="arrow">&rarr;</span>
+        </div>
+        <div class="roster-item" onmouseenter="updateData(3)" onmouseleave="resetData()">
+            Benedikt Fehrmling <span class="arrow">&rarr;</span>
+        </div>
+    </main>
 
     <div class="corner-data cd-tl">
         <span class="label">Position</span>
-        <span id="d-role">Creative Director</span>
+        <span id="d-role">Personnel</span>
     </div>
 
     <div class="corner-data cd-bl">
         <span class="label">ID</span>
-        <span id="d-id">OP-001</span>
+        <span id="d-id">NAV-000</span>
     </div>
 
     <div class="corner-data cd-br">
         <span class="label">Specialty</span>
-        <span id="d-spec">Brand Architecture</span>
+        <span id="d-spec">Digital Navigation</span>
     </div>
 
     <script>
-        // UPDATED DATA
         const team = [
             { role: "Creative Director", id: "OP-001", spec: "Strategy & Identity" },
-            { role: "Lead Developer", id: "OP-002", spec: "Full Stack / Next.js" },
+            { role: "Lead Developer", id: "OP-002", spec: "Full Stack Systems" },
             { role: "Brand Strategist", id: "OP-003", spec: "Narrative Design" },
             { role: "3D Specialist", id: "OP-004", spec: "Visual Synthesis" }
         ];
@@ -190,15 +231,27 @@
         const dSpec = document.getElementById('d-spec');
 
         function updateData(index) {
-            // Swap Images
+            // Swap Backgrounds (Images 1-4 correspond to Team 0-3)
             images.forEach(img => img.classList.remove('active'));
-            document.getElementById(`img-${index}`).classList.add('active');
+            const targetImg = document.getElementById(`img-${index + 1}`);
+            if(targetImg) targetImg.classList.add('active');
 
-            // Update Corner Stats
+            // Update HUD Stats
             dRole.innerText = team[index].role;
             dId.innerText = team[index].id;
             dSpec.innerText = team[index].spec;
         }
+
+        function resetData() {
+            // Optional: return to default background on mouse leave
+            // images.forEach(img => img.classList.remove('active'));
+            // document.getElementById('img-0').classList.add('active');
+        }
+
+        // Mobile touch support
+        document.querySelectorAll('.roster-item').forEach((item, idx) => {
+            item.addEventListener('touchstart', () => updateData(idx));
+        });
     </script>
 
 </body>

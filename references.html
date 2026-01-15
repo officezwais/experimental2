@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archive - Knowledge Navigators</title>
+    
+    <title>Archive: Selected Works | Knowledge Navigators</title>
+    <meta name="description" content="A curated archive of web building, branding, and digital strategy projects by Knowledge Navigators. Mapping the success of our partners.">
+    <meta name="keywords" content="Portfolio, Web Development Archive, Branding Projects, Knowledge Navigators Works">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
 
     <style>
         /* --- 1. SETUP --- */
@@ -20,14 +25,16 @@
             --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--color-bg);
             color: var(--color-text);
-            width: 100vw; min-height: 100vh;
+            width: 100vw; 
+            min-height: 100dvh;
             font-family: var(--font-sans);
             overflow-x: hidden;
+            cursor: crosshair;
         }
 
         /* TEXTURE */
@@ -37,7 +44,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* --- 2. MAGNETIC CLOSE BUTTON --- */
+        /* --- 2. CLOSE BUTTON --- */
         .close-container {
             position: fixed; top: 2rem; right: 2rem; z-index: 1000;
         }
@@ -49,7 +56,6 @@
             backdrop-filter: blur(5px);
             cursor: pointer;
             transition: all 0.4s var(--ease-snap);
-            text-decoration: none;
             mix-blend-mode: difference;
         }
         .close-btn span {
@@ -65,91 +71,108 @@
         /* --- 3. DYNAMIC BACKGROUND --- */
         .bg-view {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0;
-            background-color: #080808;
-            transition: background 0.3s;
+            z-index: 0; background-color: #080808;
         }
         .bg-image {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            opacity: 0; transform: scale(1.1);
-            transition: opacity 0.4s, transform 8s ease-out;
-            filter: grayscale(100%) brightness(0.6);
+            opacity: 0; transform: scale(1.05);
+            transition: opacity 0.6s ease, transform 1.2s var(--ease-snap);
+            filter: grayscale(100%) brightness(0.4);
         }
-        .bg-image.active {
-            opacity: 1; transform: scale(1);
-        }
+        .bg-image.active { opacity: 1; transform: scale(1); }
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: black; opacity: 0.6; transition: 0.5s;
+            background: black; opacity: 0.6; transition: 0.8s;
         }
-        body.is-hovering .overlay { opacity: 0.2; }
+        body.is-hovering .overlay { opacity: 0.3; }
 
 
         /* --- 4. THE LIST --- */
         .archive-wrapper {
             position: relative; z-index: 10;
-            padding: 15vh 10vw;
+            padding: 12vh 10vw;
+            max-width: 1400px; margin: 0 auto;
         }
 
         .archive-head {
             font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase;
-            color: #555; margin-bottom: 2rem; border-bottom: 1px solid #222; padding-bottom: 1rem;
+            color: #555; margin-bottom: 3rem; border-bottom: 1px solid #222; padding-bottom: 1rem;
             display: flex; justify-content: space-between;
         }
 
         .project-item {
             display: flex; align-items: baseline; justify-content: space-between;
-            padding: 2rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 2.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             transition: 0.4s;
             text-decoration: none; color: white;
         }
 
-        /* TYPOGRAPHY SHIFT */
         .p-name {
             font-family: var(--font-sans); 
             font-weight: 500;
-            font-size: 4vw;
-            letter-spacing: -2px;
-            transition: transform 0.4s var(--ease-snap), color 0.3s;
+            font-size: clamp(1.8rem, 4vw, 5rem);
+            letter-spacing: -1px;
+            transition: all 0.5s var(--ease-snap);
             transform-origin: left center;
+            display: flex; align-items: center; gap: 20px;
         }
 
         .p-tags {
-            font-family: var(--font-mono); font-size: 0.8rem; color: #666;
+            font-family: var(--font-mono); font-size: 0.8rem; color: #444;
             text-transform: uppercase; letter-spacing: 1px;
             transition: 0.4s;
         }
 
-        /* HOVER EFFECTS */
-        body.is-hovering .project-item { opacity: 0.2; }
-        body.is-hovering .project-item:hover { 
-            opacity: 1; border-bottom-color: white; 
+        /* --- ARROW MOVEMENT --- */
+        .arrow { 
+            display: inline-block; 
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.4s var(--ease-snap);
+            font-family: var(--font-sans); 
+            font-style: normal;
         }
+
+        /* HOVER EFFECTS */
+        body.is-hovering .project-item { opacity: 0.15; }
+        body.is-hovering .project-item:hover { opacity: 1; border-bottom-color: rgba(255,255,255,0.3); }
 
         .project-item:hover .p-name {
             font-family: var(--font-serif); 
             font-style: italic;
             font-weight: 400;
-            letter-spacing: 0px;
-            transform: translateX(20px); 
+            transform: translateX(10px); 
+        }
+
+        .project-item:hover .arrow {
+            opacity: 1;
+            transform: translateX(5px);
         }
         
-        .project-item:hover .p-tags { color: white; }
+        .project-item:hover .p-tags { color: white; opacity: 0.6; }
 
         .no-link { cursor: default; }
 
-        @media (max-width: 900px) {
-            .p-name { font-size: 8vw; }
-            .p-tags { display: none; }
-        }
 
+        /* --- 5. OPTIMAL MOBILE --- */
+        @media (max-width: 1024px) {
+            .archive-wrapper { padding: 8vh 6vw; }
+            .project-item { flex-direction: column; gap: 0.5rem; padding: 1.5rem 0; }
+            .p-name { font-size: 1.8rem; gap: 10px; }
+            .p-tags { font-size: 0.7rem; color: #666; }
+            .archive-head { margin-bottom: 1.5rem; }
+            
+            /* Show arrow by default on mobile since there is no hover */
+            .arrow { opacity: 0.4; transform: none; font-size: 1.2rem; }
+            
+            /* Simplify Background for performance */
+            .bg-image { filter: grayscale(100%) brightness(0.3); }
+        }
     </style>
 </head>
-<body>
-
-    <div class="noise"></div>
+<body class="is-hovering"> <div class="noise"></div>
 
     <div class="bg-view">
         <div class="overlay"></div>
@@ -170,43 +193,43 @@
     </a>
 
     <div class="archive-wrapper">
-        <div class="archive-head">
+        <header class="archive-head">
             <span>Selected Works</span>
             <span>(07)</span>
-        </div>
+        </header>
 
         <a href="https://experimental-two.vercel.app" target="_blank" class="project-item" onmouseenter="setBg('bg-1')" onmouseleave="clearBg()">
-            <span class="p-name">Knowledge Navigators</span>
+            <span class="p-name">Knowledge Navigators <span class="arrow">&rarr;</span></span>
             <span class="p-tags">experimental-two.vercel.app</span>
         </a>
 
         <a href="https://www.owego.io" target="_blank" class="project-item" onmouseenter="setBg('bg-2')" onmouseleave="clearBg()">
-            <span class="p-name">Owego</span>
+            <span class="p-name">Owego <span class="arrow">&rarr;</span></span>
             <span class="p-tags">owego.io</span>
         </a>
 
         <a href="https://www.zwais.com" target="_blank" class="project-item" onmouseenter="setBg('bg-3')" onmouseleave="clearBg()">
-            <span class="p-name">Zwais</span>
+            <span class="p-name">Zwais <span class="arrow">&rarr;</span></span>
             <span class="p-tags">zwais.com</span>
         </a>
 
         <a href="https://www.rebecca-schultze.com" target="_blank" class="project-item" onmouseenter="setBg('bg-4')" onmouseleave="clearBg()">
-            <span class="p-name">Rebecca Schultze</span>
+            <span class="p-name">Rebecca Schultze <span class="arrow">&rarr;</span></span>
             <span class="p-tags">rebecca-schultze.com</span>
         </a>
 
         <a href="https://www.christophmarlon.com" target="_blank" class="project-item" onmouseenter="setBg('bg-5')" onmouseleave="clearBg()">
-            <span class="p-name">Christoph Marlon</span>
+            <span class="p-name">Christoph Marlon <span class="arrow">&rarr;</span></span>
             <span class="p-tags">christophmarlon.com</span>
         </a>
 
         <a href="https://www.werbemittelimporte.de" target="_blank" class="project-item" onmouseenter="setBg('bg-6')" onmouseleave="clearBg()">
-            <span class="p-name">Werbemittelimporte</span>
+            <span class="p-name">Werbemittelimporte <span class="arrow">&rarr;</span></span>
             <span class="p-tags">werbemittelimporte.de</span>
         </a>
 
         <div class="project-item no-link" onmouseenter="setBg('bg-7')" onmouseleave="clearBg()">
-            <span class="p-name">Krämer Hof</span>
+            <span class="p-name">Krämer Hof <span class="arrow">&rarr;</span></span>
             <span class="p-tags">Coming soon</span>
         </div>
 
@@ -223,9 +246,18 @@
         }
 
         function clearBg() {
-            body.classList.remove('is-hovering');
+            // We keep 'is-hovering' on by default for the base style, 
+            // but you can toggle it if you want the overlay to darken/lighten.
             document.querySelectorAll('.bg-image').forEach(el => el.classList.remove('active'));
         }
+
+        // Mobile touch fix to show background on tap
+        document.querySelectorAll('.project-item').forEach(item => {
+            item.addEventListener('touchstart', function() {
+                const bgId = this.getAttribute('onmouseenter').match(/'([^']+)'/)[1];
+                setBg(bgId);
+            });
+        });
     </script>
 
 </body>

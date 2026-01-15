@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Branding - Knowledge Navigators</title>
+    
+    <title>Branding Systems | Knowledge Navigators</title>
+    <meta name="description" content="Explore our branding services: from visual identity and logos to comprehensive brand strategy and immersive experiences.">
+    <meta name="keywords" content="Brand Design, Identity Systems, Logo Design, Knowledge Navigators Branding">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
     <style>
         /* --- 1. SETUP --- */
@@ -15,7 +20,7 @@
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-            --ease-luxe: cubic-bezier(0.2, 0.0, 0.2, 1); /* Sharp, expensive easing */
+            --ease-luxe: cubic-bezier(0.2, 0.0, 0.2, 1);
             --color-cream: #f2f0e9;
             --color-dark: #0a0a0a;
             --color-red: #c92a2a;
@@ -25,12 +30,12 @@
 
         body {
             background-color: var(--color-dark);
-            width: 100vw; height: 100vh;
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
             font-family: var(--font-sans);
         }
 
-        /* FILM GRAIN TEXTURE */
         .noise {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 9000; opacity: 0.04;
@@ -50,7 +55,6 @@
             cursor: pointer;
             transition: all 0.4s var(--ease-luxe);
             mix-blend-mode: difference;
-            text-decoration: none;
         }
         .close-btn span {
             display: block; width: 14px; height: 1px; background: white;
@@ -69,53 +73,41 @@
         }
 
         .panel {
-            flex: 1; /* Default state: all equal */
+            flex: 1;
             position: relative;
             height: 100%;
             transition: flex 0.8s var(--ease-luxe);
             overflow: hidden;
-            border-right: 1px solid rgba(0,0,0,0.1);
-            cursor: crosshair;
+            border-right: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        /* HOVER STATES */
-        .panel:hover {
-            flex: 5; /* Expands to take up space */
-        }
-        /* When one is hovered, dim the others slightly */
-        .gallery:hover .panel:not(:hover) {
-            filter: grayscale(100%) brightness(0.7);
-        }
+        .panel:hover { flex: 5; }
+        .gallery:hover .panel:not(:hover) { filter: grayscale(100%) brightness(0.7); }
 
-
-        /* --- 4. PANEL CONTENT STYLING --- */
-        
-        /* The "Spine" Text (Visible when collapsed) */
+        /* --- 4. PANEL CONTENT --- */
         .spine-title {
             position: absolute;
             bottom: 4rem; left: 50%;
             transform: translateX(-50%) rotate(-90deg);
             white-space: nowrap;
             font-family: var(--font-mono);
-            font-size: 1rem;
-            letter-spacing: 2px;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            transform-origin: center;
-            opacity: 1;
             transition: opacity 0.4s;
             pointer-events: none;
         }
         .panel:hover .spine-title { opacity: 0; }
 
-        /* The Main Content (Revealed on expand) */
         .content-wrap {
-            padding: 4rem;
+            padding: 5rem;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s 0.2s, transform 0.6s 0.2s; /* Delay so it only shows when open */
+            transform: translateX(-20px);
+            transition: opacity 0.5s 0.2s, transform 0.6s 0.2s;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -123,102 +115,119 @@
             position: relative;
             z-index: 2;
         }
-        .panel:hover .content-wrap { opacity: 1; transform: translateY(0); }
+        .panel:hover .content-wrap { opacity: 1; transform: translateX(0); }
 
         .big-number {
             font-family: var(--font-serif);
-            font-size: 12rem;
+            font-size: 15vw;
             line-height: 0.8;
-            opacity: 0.1;
-            position: absolute; top: -2rem; left: 2rem;
+            opacity: 0.05;
+            position: absolute; top: 0rem; right: 2rem;
             font-style: italic;
+            font-weight: 700;
+            pointer-events: none;
         }
 
         h2 {
             font-family: var(--font-serif);
-            font-size: 6vw;
-            line-height: 0.9;
+            font-style: italic; /* Aesthetic Update */
+            font-weight: 500;
+            font-size: clamp(2.5rem, 5vw, 6rem);
+            line-height: 0.95;
             margin-bottom: 2rem;
-            max-width: 800px;
+            max-width: 700px;
         }
 
         p {
             font-family: var(--font-sans);
             font-size: 1.1rem;
             line-height: 1.6;
-            max-width: 400px;
+            max-width: 420px;
             margin-bottom: 3rem;
+            opacity: 0.8;
         }
 
+        /* Price Tag with Arrow Movement */
         .price-tag {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
             font-family: var(--font-mono);
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             border: 1px solid currentColor;
-            padding: 10px 30px;
+            padding: 12px 35px;
             border-radius: 50px;
+            transition: all 0.3s ease;
         }
+        .arrow { display: inline-block; transition: transform 0.3s ease; }
+        .panel:hover .price-tag:hover .arrow { transform: translateX(8px); }
+        .panel:hover .price-tag:hover { background: currentColor; }
+        /* Trick to make background text readable on hover */
+        #p1 .price-tag:hover { color: var(--color-cream); background: var(--color-dark); }
+        #p2 .price-tag:hover { color: var(--color-red); background: var(--color-cream); }
+        #p3 .price-tag:hover { color: var(--color-dark); background: var(--color-cream); }
 
 
-        /* --- 5. INDIVIDUAL PANEL AESTHETICS --- */
-
-        /* PANEL 1: IDENTITY (White Paper Style) */
-        #p1 {
-            background-color: var(--color-cream);
-            color: var(--color-dark);
-        }
-        #p1 .spine-title { color: var(--color-dark); }
-        /* Abstract Shape */
+        /* --- 5. PANEL VARIATIONS --- */
+        #p1 { background-color: var(--color-cream); color: var(--color-dark); }
         #p1 .shape {
-            position: absolute; right: -10%; bottom: -10%;
-            font-size: 30rem; font-family: var(--font-serif); font-style: italic;
-            opacity: 0.05; pointer-events: none;
+            position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+            font-size: 40vh; font-family: var(--font-serif); font-style: italic;
+            opacity: 0.03; pointer-events: none;
         }
 
-        /* PANEL 2: STRATEGY (Editorial Red) */
-        #p2 {
-            background-color: var(--color-red);
-            color: var(--color-cream);
-        }
-        #p2 .spine-title { color: var(--color-cream); }
-        /* Scrolling Marquee Background */
+        #p2 { background-color: var(--color-red); color: var(--color-cream); }
         .marquee-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            overflow: hidden; pointer-events: none; opacity: 0.1;
+            overflow: hidden; pointer-events: none; opacity: 0.07;
         }
         .marquee-text {
-            font-family: var(--font-mono); font-size: 10rem;
+            font-family: var(--font-mono); font-size: 12rem;
             white-space: nowrap; position: absolute;
-            transform: rotate(-45deg); top: 20%; left: -20%;
+            transform: rotate(-45deg); top: 10%; left: -10%;
         }
 
-        /* PANEL 3: EXPERIENCE (Void Style) */
-        #p3 {
-            background-color: var(--color-dark);
-            color: var(--color-cream);
-            border-right: none;
-        }
-        #p3 .spine-title { color: white; }
+        #p3 { background-color: var(--color-dark); color: var(--color-cream); border: none; }
         .video-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0.4; mix-blend-mode: screen;
-            filter: grayscale(100%);
-            transition: 0.8s;
+            object-fit: cover; opacity: 0.3; filter: grayscale(100%);
+            transition: 1s var(--ease-luxe);
         }
-        #p3:hover .video-bg { opacity: 0.8; filter: grayscale(0%); }
+        #p3:hover .video-bg { opacity: 0.6; filter: grayscale(0%); }
 
 
-        /* RESPONSIVE: Stack vertically on mobile */
-        @media (max-width: 900px) {
-            .gallery { flex-direction: column; }
-            .panel { width: 100%; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.1); }
-            .spine-title { transform: none; bottom: 2rem; left: 2rem; }
-            h2 { font-size: 3rem; }
-            .content-wrap { padding: 2rem; }
-            .big-number { font-size: 6rem; }
-            .panel:hover { flex: 4; }
+        /* --- 6. OPTIMAL MOBILE LAYOUT --- */
+        @media (max-width: 1024px) {
+            body { overflow-y: auto; height: auto; }
+            .gallery { flex-direction: column; height: auto; }
+            
+            .panel { 
+                width: 100%; 
+                height: 33.33vh; /* Split screen into three visible chunks */
+                min-height: 280px;
+                border-right: none; 
+                border-bottom: 1px solid rgba(0,0,0,0.1); 
+                transition: height 0.7s var(--ease-luxe);
+            }
+            
+            /* Expand panel on mobile click/touch */
+            .panel:hover { height: 75vh; flex: none; }
+
+            .spine-title { 
+                transform: none; 
+                bottom: auto; top: 2rem; left: 2rem; 
+                opacity: 0.6;
+            }
+
+            .content-wrap { padding: 3rem 2rem; justify-content: flex-end; }
+            
+            h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+            p { font-size: 1rem; margin-bottom: 2rem; }
+            .big-number { font-size: 8rem; top: 1rem; right: 1rem; opacity: 0.08; }
+            
+            .close-container { top: 1rem; right: 1rem; }
+            .close-btn { width: 40px; height: 40px; }
         }
-
     </style>
 </head>
 <body>
@@ -243,7 +252,10 @@
                 <h2>Visual<br>Identity.</h2>
                 <p>The face of your business. We craft timeless logos, typography systems, and color palettes that cut through the noise.</p>
                 <div>
-                    <span class="price-tag">€ 400</span>
+                    <div class="price-tag">
+                        <span>€ 400</span>
+                        <span class="arrow">&rarr;</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -259,7 +271,10 @@
                 <h2>Brand<br>Guidelines.</h2>
                 <p>A comprehensive strategic manual. We define your voice, photography direction, and usage rules to ensure total consistency.</p>
                 <div>
-                    <span class="price-tag">€ 2.000</span>
+                    <div class="price-tag">
+                        <span>€ 2.000</span>
+                        <span class="arrow">&rarr;</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -272,10 +287,13 @@
 
             <div class="content-wrap">
                 <span class="big-number">03</span>
-                <h2>Total<br>Immerison.</h2>
-                <p>From motion language to physical merchandise. We design the entire world your brand lives in.</p>
+                <h2>Total<br>Immersion.</h2>
+                <p>From motion language to physical merchandise. We design the entire world your brand lives in and breathes.</p>
                 <div>
-                    <span class="price-tag">€ 5.000+</span>
+                    <div class="price-tag">
+                        <span>€ 5.000+</span>
+                        <span class="arrow">&rarr;</span>
+                    </div>
                 </div>
             </div>
         </div>
