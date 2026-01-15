@@ -150,21 +150,51 @@
         
         .label { color: #555; display: block; margin-bottom: 8px; font-size: 0.65rem; }
 
-        /* --- 6. OPTIMAL MOBILE --- */
+        /* --- 6. OPTIMAL MOBILE LAYOUT (UPDATED) --- */
         @media (max-width: 1024px) {
-            body { align-items: center; overflow-y: auto; }
-            .roster-container { padding: 2rem 0; gap: 1.5rem; }
-            .roster-item { font-size: 2.2rem; color: rgba(255,255,255,0.6); }
+            body { 
+                /* Allow scroll in case height is small */
+                align-items: center; 
+                overflow-y: auto; 
+                min-height: 100vh;
+            }
+            .roster-container { 
+                padding: 4rem 1rem; 
+                gap: 1.25rem; /* Tightened gap */
+            }
             
-            /* On mobile, HUD remains visible to guide the user */
-            .corner-data { opacity: 0.8; font-size: 0.65rem; position: relative; top: auto; left: auto; right: auto; bottom: auto; }
+            .roster-item { 
+                /* Significantly reduced for mobile readability */
+                font-size: 1.5rem; 
+                color: rgba(255,255,255,0.7); /* slightly brighter by default on mobile */
+                width: 100%;
+                justify-content: center;
+            }
             
-            .cd-tl { position: fixed; top: 2rem; left: 1.5rem; }
-            .cd-bl { position: fixed; bottom: 2rem; left: 1.5rem; }
-            .cd-br { display: none; } /* Hide right corner to prevent overlap on narrow screens */
+            .arrow { 
+                /* Arrow always visible but subtle on mobile */
+                opacity: 0.5; 
+                transform: none; 
+                font-size: 1rem; 
+                margin-left: 5px;
+            }
             
-            .arrow { opacity: 0.3; transform: none; font-size: 1.2rem; }
-            .roster-item:hover { letter-spacing: 1px; }
+            /* Disable the heavy blur effect on mobile for better usability */
+            .roster-container:hover .roster-item:not(:hover) {
+                opacity: 0.3;
+                filter: none;
+            }
+
+            /* Adjust HUD positioning */
+            .corner-data { 
+                opacity: 1; /* Always show data on mobile if space allows */
+                font-size: 0.6rem; 
+            }
+            
+            .cd-tl { position: fixed; top: 1.5rem; left: 1.5rem; }
+            .cd-bl { position: fixed; bottom: 1.5rem; left: 1.5rem; }
+            /* Hide the right data block to avoid overlap on narrow screens */
+            .cd-br { display: none; } 
         }
     </style>
 </head>

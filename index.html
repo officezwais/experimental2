@@ -181,28 +181,34 @@
         a:hover .arrow { transform: translateX(8px); }
 
 
-        /* --- 7. OPTIMAL MOBILE LAYOUT --- */
+        /* --- 7. OPTIMAL MOBILE LAYOUT (Updated) --- */
         @media (max-width: 1024px) {
             body { 
-                overflow-y: auto; /* Allow scroll on small mobile */
+                overflow-y: auto; 
                 height: auto;
                 min-height: 100vh;
             }
             .container { 
                 padding: 1.5rem; 
-                gap: 5rem; /* Forces space between sections */
+                /* Reduced gap significantly to fit on smaller screens */
+                gap: 2.5rem; 
                 justify-content: flex-start; 
             }
             
             .top-services { 
                 flex-direction: column; 
                 align-items: flex-start; 
-                gap: 2rem; 
+                gap: 1.25rem; /* Tighter list */
             }
-            .service-title { font-size: 2.8rem; }
-            .service-label { transform: none; margin-bottom: 4px; }
             
-            /* Optimization: Hero text becomes relative to prevent overlap */
+            /* REDUCED SIZE: Was 2.8rem, now 1.8rem */
+            .service-title { 
+                font-size: 1.8rem; 
+            }
+            
+            .service-label { transform: none; margin-bottom: 2px; font-size: 0.7rem; }
+            
+            /* HERO TEXT */
             .hero-text { 
                 position: relative; 
                 top: 0; 
@@ -212,21 +218,30 @@
                 width: 100%;
                 padding: 1rem 0;
             }
-            .hero-statement { font-size: 1.2rem; line-height: 1.4; }
+            
+            /* REDUCED SIZE: Was 1.2rem, now 1.1rem */
+            .hero-statement { 
+                font-size: 1.1rem; 
+                line-height: 1.4; 
+            }
 
             .bottom-section { 
                 flex-direction: column; 
                 align-items: flex-start; 
-                gap: 3rem; 
+                gap: 2rem; 
                 margin-top: auto; 
                 padding-bottom: 2rem;
             }
             .bottom-right-group { 
                 width: 100%; 
                 justify-content: flex-start; 
-                gap: 2rem; 
+                gap: 1.5rem; 
+                text-align: left;
             }
-            .b-title-large { font-size: 2.2rem; }
+            
+            /* REDUCED SIZE: Was 2.2rem, now 1.8rem */
+            .b-title-large { font-size: 1.8rem; }
+            .b-label-large { font-size: 0.7rem; }
         }
     </style>
 </head>
